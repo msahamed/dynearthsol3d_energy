@@ -1,0 +1,10 @@
+db.runCommand(
+   {
+     geoNear: "searches",
+     near: { type: "Point", coordinates: [ 90.35, 23.7 ] },
+     spherical: true,
+     query: { tags:{$in:["nodejs", "coffee"]}},
+     minDistance: 10000,
+     limit : 20
+   }
+)

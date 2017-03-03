@@ -1,0 +1,62 @@
+# Domain size: 500 km x 150 km
+# Two layersr. The upper layer (mattype 0) is 35 km thick and becomes 39 km
+# thick near the center. The upper layer has a high resolution grid. The lower
+# layer (mattype 1) is divided in 3 regions. The central region has half
+# resolution as the top layer. The other regions have low resolution.
+#
+#  0-----------------5
+#  |                 |
+#  1--10--12 11---8--4 
+#  |   \   \9/   /   |
+#  |    \       /    |
+#  |     \     /     |
+#  2------6---7------3
+#
+#
+#### node coordinates ####
+# npoints ndims 0 0
+  13      2     0 0
+# i    xi       yi
+  0    0.0      0.0
+  1    0.0    -35.0e3 
+  2    0.0   -150.0e3 
+  3  500.0e3 -150.0e3 
+  4  500.0e3  -35.0e3
+  5  500.0e3    0.0
+  6  150.0e3 -150.0e3 
+  7  350.0e3 -150.0e3
+  8  380.0e3  -35.0e3
+  9  250.0e3  -39.0e3
+ 10  120.0e3  -35.0e3
+ 11  300.0e3  -35.0e3
+ 12  200.0e3  -35.0e3
+#### segments ####
+# nsegments 1
+  16        1
+# j  pj0  pj1  bdry_flag
+  0   0    1    1  #  1: left (x0)
+  1   1    2    1
+  2   2    6   16  # 16: bottom (z0)
+  3   6    7   16
+  4   7    3   16
+  5   3    4    2  #  2: right (x1)
+  6   4    5    2
+  7   5    0   32  # 32: top (z1)
+  8   1   10    0  #  0: not a boundary
+  9  10   12    0
+ 10  12    9    0
+ 11   9   11    0
+ 12  11    8    0
+ 13   8    4    0
+ 14  10    6    0
+ 15   8    7    0
+#### holes, must be 0 ####
+0
+#### regions ####
+# nregions
+  4
+# k  xk    zk   mattype  size
+  0 250e3 -20e3 0        2e7  # max. element size (in m^2)
+  1 250e3 -80e3 1        4e7
+  2   1e3 -80e3 1        -1   # no upper limit on elem size
+  3 450e3 -80e3 1        -1

@@ -1,0 +1,224 @@
+diff -r 1bcf6a74a352 .DS_Store
+Binary file .DS_Store has changed
+diff -r 1bcf6a74a352 2vtk.py
+--- a/2vtk.py	Tue Dec 06 13:44:31 2016 -0600
++++ b/2vtk.py	Fri Mar 03 14:30:25 2017 -0600
+@@ -269,7 +269,7 @@
+ 
+ def convert_field(des, frame, name, fvtu):
+     field = des.read_field(frame, name)
+-    if name in ('coordinate', 'velocity', 'velocity averaged', 'force'):
++    if name in ('coordinate', 'velocity', 'velocity averaged', 'force', 'topography'):
+         if des.ndims == 2:
+             # VTK requires vector field (velocity, coordinate) has 3 components.
+             # Allocating a 3-vector tmp array for VTK data output.
+@@ -281,7 +281,7 @@
+ 
+         # Rename 'velocity averaged' to 'velocity'
+         if name == 'velocity averaged': name = 'velocity'
+-
++        if name == 'topography': print('Hello topograph')
+         vtk_dataarray(fvtu, tmp, name, 3)
+     else:
+         vtk_dataarray(fvtu, field, name)
+diff -r 1bcf6a74a352 Dynearthsol.py
+--- a/Dynearthsol.py	Tue Dec 06 13:44:31 2016 -0600
++++ b/Dynearthsol.py	Fri Mar 03 14:30:25 2017 -0600
+@@ -94,6 +94,10 @@
+         elif name in set(['temperature', 'temp_power', 'temp_pressure', 'temp_density', 'mass', 'tmass', 'volume_n']):
+             count = nnode
+             shape = (nnode, )
++        elif name in set(['topography']):
++            print(name)
++            count = nnode
++            shape = (nnode, self.ndims)
+         else:
+             raise NameError('uknown field name: ' + name)
+         return dtype, count, shape
+diff -r 1bcf6a74a352 Makefile
+--- a/Makefile	Tue Dec 06 13:44:31 2016 -0600
++++ b/Makefile	Fri Mar 03 14:30:25 2017 -0600
+@@ -12,10 +12,10 @@
+ ## openmp = 1: enable OpenMP
+ ## useadapt = 1: use libadaptivity for mesh optimization during remeshing
+ 
+-ndims=3
++ndims=2
+ opt=2
+ openmp=0
+-useadapt=1
++useadapt=0
+ 
+ ## Select C++ compiler
+ ifeq ($(useadapt), 1)
+diff -r 1bcf6a74a352 barycentric-fn.cxx
+--- a/barycentric-fn.cxx	Tue Dec 06 13:44:31 2016 -0600
++++ b/barycentric-fn.cxx	Fri Mar 03 14:30:25 2017 -0600
+@@ -164,5 +164,3 @@
+ }
+ 
+ #endif
+-
+-
+diff -r 1bcf6a74a352 brc-interpolation.cxx
+--- a/brc-interpolation.cxx	Tue Dec 06 13:44:31 2016 -0600
++++ b/brc-interpolation.cxx	Fri Mar 03 14:30:25 2017 -0600
+@@ -251,6 +251,12 @@
+     delete var.vel;
+     var.vel = b;
+ 
++    const int tn = (var.bnodes[5]).size();
++    array_t *topo = new array_t(tn);
++    interpolate_field(brc, el, old_connectivity, *var.topography, *topo);
++    delete var.topography;
++    var.topography = topo;
++
+     b = new array_t(var.nnode);
+     interpolate_field(brc, el, old_connectivity, *var.coord0, *b);
+     delete var.coord0;
+diff -r 1bcf6a74a352 fields.cxx
+--- a/fields.cxx	Tue Dec 06 13:44:31 2016 -0600
++++ b/fields.cxx	Fri Mar 03 14:30:25 2017 -0600
+@@ -11,6 +11,7 @@
+ {
+     const int n = var.nnode;
+     const int e = var.nelem;
++    const int tn = (var.bnodes[5]).size(); // Top surface node numbers
+ 
+     var.volume = new double_vec(e);
+     var.volume_old = new double_vec(e);
+@@ -32,6 +33,7 @@
+         var.plstrain = new double_vec(e);
+         var.delta_plstrain = new double_vec(e);
+         var.vel = new array_t(n, 0);
++        var.topography = new array_t(tn, 0);
+         var.strain = new tensor_t(e, 0);
+         var.stress = new tensor_t(e, 0);
+         var.stressyy = new double_vec(e, 0);
+diff -r 1bcf6a74a352 geometry.cxx
+--- a/geometry.cxx	Tue Dec 06 13:44:31 2016 -0600
++++ b/geometry.cxx	Fri Mar 03 14:30:25 2017 -0600
+@@ -362,7 +362,7 @@
+             double tm = (((*var.rho)[e] * mat.cp(e)) + (mat.alpha(e) * P)) * (volume[e] / NODES_PER_ELEM);
+             //double tm = mat.rho(e) * mat.cp(e) * volume[e] / NODES_PER_ELEM;
+             const int *conn = connectivity[e];
+-            
++
+             for (int i = 0; i < NODES_PER_ELEM; ++i)
+             {
+                 volume_n[conn[i]]  += volume[e];
+diff -r 1bcf6a74a352 output.cxx
+--- a/output.cxx	Tue Dec 06 13:44:31 2016 -0600
++++ b/output.cxx	Fri Mar 03 14:30:25 2017 -0600
+@@ -107,7 +107,7 @@
+     bin.write_array(*var.temp_power, "temp_power", var.temp_power->size());
+     bin.write_array(*var.temp_pressure, "temp_power", var.temp_pressure->size());
+     bin.write_array(*var.temp_density, "temp_power", var.temp_density->size());
+-    
++
+     bin.write_array(*var.powerTerm, "temp_power", var.powerTerm->size());
+     bin.write_array(*var.pressureTerm, "temp_pressure", var.pressureTerm->size());
+     bin.write_array(*var.densityTerm, "temp_density", var.densityTerm->size());
+@@ -115,8 +115,11 @@
+     bin.write_array(*var.tenergy, "total_energy", var.tenergy->size());
+     bin.write_array(*var.venergy, "volumetric_energy", var.venergy->size());
+     bin.write_array(*var.denergy, "deviatoric_energy", var.denergy->size());
++    bin.write_array(*var.plstrain, "plastic strain", var.plstrain->size());
+ 
+-    bin.write_array(*var.plstrain, "plastic strain", var.plstrain->size());
++    // bin.write_array(*var.cell_center, "cell_center", var.cell_center->size());
++    write_topography(var, *var.topography);
++    bin.write_array(*var.topography, "topography", var.topography->size());
+ 
+     // Strain rate and plastic strain rate do not need to be checkpointed,
+     // so we don't have to distinguish averged/non-averaged variants.
+@@ -218,6 +221,15 @@
+     }
+ }
+ 
++void Output::write_topography(const Variables& var, array_t& topography) {
++  const int topnodes = (var.bnodes[5]).size();
++  double* ff = topography.data();
++  for (int i = 0; i < topnodes; i++){
++    int index = (var.bnodes[5])[i];
++    ff[NDIMS-NDIMS] = (*var.coord)[index][NDIMS-NDIMS];
++    ff[NDIMS-1] = (*var.coord)[index][NDIMS-1];
++  }
++}
+ 
+ void Output::average_fields(Variables& var)
+ {
+diff -r 1bcf6a74a352 output.hpp
+--- a/output.hpp	Tue Dec 06 13:44:31 2016 -0600
++++ b/output.hpp	Fri Mar 03 14:30:25 2017 -0600
+@@ -24,10 +24,10 @@
+ public:
+     Output(const Param& param, double start_time, int start_frame);
+     ~Output();
++    void write_topography(const Variables& var, array_t& topography);
+     void write(const Variables& var, bool is_averaged=true);
+     void write_checkpoint(const Param& param, const Variables& var);
+     void average_fields(Variables& var);
+-
+ };
+ 
+ 
+diff -r 1bcf6a74a352 parameters.hpp
+--- a/parameters.hpp	Tue Dec 06 13:44:31 2016 -0600
++++ b/parameters.hpp	Fri Mar 03 14:30:25 2017 -0600
+@@ -266,8 +266,8 @@
+     double_vec *densityTerm;
+ 
+ 
+-    array_t *vel, *force, *coord0;
+-    tensor_t *strain_rate, *strain, *stress;
++    array_t *vel, *force, *coord0, *topography;
++    tensor_t *strain_rate, *strain, *stress, *cell_center;
+     shapefn *shpdx, *shpdy, *shpdz;
+ 
+     MatProps *mat;
+diff -r 1bcf6a74a352 remeshing.cxx
+--- a/remeshing.cxx	Tue Dec 06 13:44:31 2016 -0600
++++ b/remeshing.cxx	Fri Mar 03 14:30:25 2017 -0600
+@@ -43,6 +43,11 @@
+     return flag & BOUNDZ0;
+ }
+ 
++bool is_right(uint flag)
++{
++    return flag & BOUNDX1;
++}
++
+ 
+ bool is_corner(uint flag)
+ {
+@@ -72,7 +77,7 @@
+ 
+ 
+ void flatten_bottom(const uint_vec &old_bcflag, double *qcoord,
+-                    double bottom, int_vec &points_to_delete, double min_dist)
++                    double bottom, double right, int_vec &points_to_delete, double min_dist)
+ {
+     // find old nodes that are on or close to the bottom boundary
+ 
+@@ -82,6 +87,11 @@
+             // restore edge nodes to initial depth
+             qcoord[i*NDIMS + NDIMS-1] = bottom;
+         }
++        if (is_right(flag)) {
++            // restore edge nodes to initial depth
++            qcoord[i*NDIMS + NDIMS-1] = right;
++        }
++
+         else if (! is_boundary(flag) &&
+                  std::fabs(qcoord[i*NDIMS + NDIMS-1] - bottom) < min_dist) {
+             points_to_delete.push_back(i);
+@@ -915,7 +925,7 @@
+         break;
+     case 1:
+     case 11:
+-        flatten_bottom(old_bcflag, qcoord, -param.mesh.zlength,
++        flatten_bottom(old_bcflag, qcoord, -param.mesh.zlength, param.mesh.xlength,
+                        points_to_delete, min_dist);
+         break;
+     case 2:
