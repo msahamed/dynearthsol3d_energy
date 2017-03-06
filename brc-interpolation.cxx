@@ -251,12 +251,6 @@ void barycentric_node_interpolation(Variables &var,
     delete var.vel;
     var.vel = b;
 
-    const int tn = (var.bnodes[5]).size();
-    array_t *topo = new array_t(tn);
-    interpolate_field(brc, el, old_connectivity, *var.topography, *topo);
-    delete var.topography;
-    var.topography = topo;
-
     b = new array_t(var.nnode);
     interpolate_field(brc, el, old_connectivity, *var.coord0, *b);
     delete var.coord0;

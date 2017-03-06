@@ -10,7 +10,7 @@
 namespace {
 
 void normal_vector_of_facet(int f, const int *conn, const array_t &coord,
-                            double *normal, double &zcenter, double &xcenter)
+                            double *normal, double &zcenter)
 {
     int n0 = conn[NODE_OF_FACET[f][0]];
     int n1 = conn[NODE_OF_FACET[f][1]];
@@ -31,7 +31,6 @@ void normal_vector_of_facet(int f, const int *conn, const array_t &coord,
     normal[2] = (v01[0] * v02[1] - v01[1] * v02[0]) / 2;
 
     zcenter = (coord[n0][2] + coord[n1][2] + coord[n2][2]) / NODES_PER_FACET;
-    xcenter = (coord[n0][0] + coord[n1][0] + coord[n2][0]) / NODES_PER_FACET;
 #else
     // the edge vector
     double v01[NDIMS];
@@ -44,7 +43,6 @@ void normal_vector_of_facet(int f, const int *conn, const array_t &coord,
     normal[1] = -v01[0];
 
     zcenter = (coord[n0][1] + coord[n1][1]) / NODES_PER_FACET;
-    xcenter = (coord[n0][0] + coord[n1][0]) / NODES_PER_FACET;
 #endif
 }
 
@@ -109,9 +107,8 @@ void create_boundary_normals(const Variables &var, double bnormals[nbdrytypes][N
             int e = j->first;
             int f = j->second;
             double tmp;
-            double xcenter;
             normal_vector_of_facet(f, (*var.connectivity)[e], *var.coord,
-                                   normal, tmp, xcenter);
+                                   normal, tmp);
             // make an unit vector
             double len = 0;
             for(int d=0; d<NDIMS; d++)
@@ -477,9 +474,8 @@ void apply_stress_bcs(const Param& param, const Variables& var, array_t& force)
             double normal[NDIMS];
             // the z-coordinate of the facet center
             double zcenter;
-            double xcenter;
 
-            normal_vector_of_facet(f, conn, *var.coord, normal, zcenter, xcenter);
+            normal_vector_of_facet(f, conn, *var.coord, normal, zcenter);
 
             double p;
             if (i==iboundz0 && param.bc.has_wrinkler_foundation) {

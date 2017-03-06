@@ -92,42 +92,6 @@ namespace {
 
 } // anonymous namespace
 
-double get_maximum_depth(const Variables& var, double zlength){
-  int nnodes = (var.bnodes[5]).size();
-  int index = (var.bnodes[5])[0];
-  double first_node = (*var.coord)[index][0];
-  int depth = std::abs(zlength) + first_node;
-
-  for (int i = 0; i < nnodes; i++){
-    index = (var.bnodes[5])[i];
-    if (depth > std::abs(zlength) + (*var.coord)[index][NDIMS-1]){
-      depth = depth;
-    }else{
-      depth = std::abs(zlength) + (*var.coord)[index][NDIMS-1];
-    }
-  }
-}
-
-double get_actual_depth(const Variables& var, double zcenter, double xcenter){
-
-  int nnodes = (var.bnodes[5]).size();
-  int index = (var.bnodes[5])[0];
-  double first_node = (*var.coord)[index][0];
-  int diff = abs(xcenter - first_node);
-  int xvalue = 0;
-  int zvalue = 0;
-
-  for (int i = 0; i < nnodes; i++){
-    index = (var.bnodes[5])[i];
-    if (diff > abs(xcenter - (*var.coord)[index][0])){
-        diff = abs(xcenter - (*var.coord)[index][0]);
-        xvalue = (*var.coord)[index][0];
-        zvalue = (*var.coord)[index][NDIMS-1];
-    }
-  }
-
-  return zvalue + std::abs(zcenter);
-}
 
 void initial_stress_state(const Param &param, const Variables &var,
                           tensor_t &stress, double_vec &stressyy, double_vec &dP, tensor_t &strain,
@@ -145,23 +109,12 @@ void initial_stress_state(const Param &param, const Variables &var,
     for (int e=0; e<var.nelem; ++e) {
         const int *conn = (*var.connectivity)[e];
         double zcenter = 0;
-        double xcenter = 0;
         for (int i=0; i<NODES_PER_ELEM; ++i) {
-            xcenter += (*var.coord)[conn[i]][0];
             zcenter += (*var.coord)[conn[i]][NDIMS-1];
         }
-        xcenter /= NODES_PER_ELEM;
         zcenter /= NODES_PER_ELEM;
 
-        double p;
-        if (param.ic.is_topo_considered){
-          double depth = get_actual_depth(var, zcenter, xcenter);
-          p = var.mat->rho(e)* param.control.gravity * depth;
-        }else{
-          p = ref_pressure(param, zcenter);
-        }
-
-
+        double p = ref_pressure(param, zcenter);
         if (param.control.ref_pressure_option == 1 ||
             param.control.ref_pressure_option == 2) {
             ks = var.mat->bulkm(e);
@@ -175,13 +128,7 @@ void initial_stress_state(const Param &param, const Variables &var,
             stressyy[e] = -p;
     }
 
-    if (param.ic.is_topo_considered){
-      double depth = get_maximum_depth(var, param.mesh.zlength);
-      compensation_pressure = ref_pressure(param, depth);
-    }else{
-      compensation_pressure = ref_pressure(param, -param.mesh.zlength);
-    }
-
+    compensation_pressure = ref_pressure(param, -param.mesh.zlength);
 }
 
 
@@ -266,16 +213,9 @@ void initial_temperature(const Param &param, const Variables &var,
             const double age = param.ic.oceanic_plate_age_in_yr * YEAR2SEC;
             const MatProps &mat = *var.mat;
             const double diffusivity = mat.k(0) / mat.rho(0) / mat.cp(0); // thermal diffusivity of 0th element
-            double depth;
 
             for (int i=0; i<var.nnode; ++i) {
-
-              if (param.ic.is_topo_considered){
-                depth = get_actual_depth(var, (*var.coord)[i][NDIMS-1], (*var.coord)[i][0]);
-              }else{
-                depth = (*var.coord)[i][NDIMS-1];
-              }
-                double w = - depth/ std::sqrt(4 * diffusivity * age);
+                double w = -(*var.coord)[i][NDIMS-1] / std::sqrt(4 * diffusivity * age);
                 temperature[i] = param.bc.surface_temperature +
                     (param.bc.mantle_temperature - param.bc.surface_temperature) * std::erf(w);
             }
@@ -289,3 +229,5 @@ void initial_temperature(const Param &param, const Variables &var,
         std::exit(1);
     }
 }
+
+

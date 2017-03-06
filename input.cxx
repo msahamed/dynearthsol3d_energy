@@ -336,9 +336,6 @@ static void declare_parameters(po::options_description &cfg,
 	("ic.oceanic_plate_age_in_yr", po::value<double>(&p.ic.oceanic_plate_age_in_yr)->default_value(60e6),
          "Age of the oceanic plate (in years), used for the temperature profile on the plate.\n")
 
-         ("ic.is_topo_considered", po::value<bool>(&p.ic.is_topo_considered)->default_value(false),
-          "Consider topography at the initial stress calculation?")
-
         // for temperature_option = 90
         ("ic.Temp_filename", po::value<std::string>(&p.ic.Temp_filename)->default_value("Thermal.dat"),
          "Filename of the input thermal field, for temperature_option=90.\n"

@@ -148,7 +148,7 @@ struct IC {
     std::string Nodes_filename;
     std::string Connectivity_filename;
     double oceanic_plate_age_in_yr;
-    bool is_topo_considered;
+
     double isostasy_adjustment_time_in_yr;
 };
 
@@ -268,8 +268,9 @@ struct Variables {
     double_vec *elastic_energy;
     tensor_t *elastic_strain;
 
-    array_t *vel, *force, *coord0, *topography;
-    tensor_t *strain_rate, *strain, *stress, *cell_center;
+
+    array_t *vel, *force, *coord0;
+    tensor_t *strain_rate, *strain, *stress;
     shapefn *shpdx, *shpdy, *shpdz;
 
     MatProps *mat;

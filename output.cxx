@@ -5,9 +5,9 @@
 #include <iostream>
 
 #ifdef USE_OMP
-    #include <omp.h>
+#include <omp.h>
 #else
-    #include <ctime>
+#include <ctime>
 #endif
 
 #include "constants.hpp"
@@ -107,21 +107,17 @@ void Output::write(const Variables& var, bool is_averaged)
     bin.write_array(*var.temp_power, "temp_power", var.temp_power->size());
     bin.write_array(*var.temp_pressure, "temp_power", var.temp_pressure->size());
     bin.write_array(*var.temp_density, "temp_power", var.temp_density->size());
-
+    
     bin.write_array(*var.powerTerm, "temp_power", var.powerTerm->size());
     bin.write_array(*var.pressureTerm, "temp_pressure", var.pressureTerm->size());
     bin.write_array(*var.densityTerm, "temp_density", var.densityTerm->size());
 
-    bin.write_array(*var.tenergy, "energy_total", var.tenergy->size());
-    bin.write_array(*var.venergy, "energy_volumetric", var.venergy->size());
-    bin.write_array(*var.denergy, "energy_deviatoric", var.denergy->size());
+    bin.write_array(*var.tenergy, "total_energy", var.tenergy->size());
+    bin.write_array(*var.venergy, "volumetric_energy", var.venergy->size());
+    bin.write_array(*var.denergy, "deviatoric_energy", var.denergy->size());
     bin.write_array(*var.thermal_energy, "energy_thermal", var.thermal_energy->size());
     bin.write_array(*var.elastic_energy, "energy_elastic", var.elastic_energy->size());
     bin.write_array(*var.plstrain, "plastic strain", var.plstrain->size());
-
-    // bin.write_array(*var.cell_center, "cell_center", var.cell_center->size());
-    write_topography(var, *var.topography);
-    bin.write_array(*var.topography, "topography", var.topography->size());
 
     // Strain rate and plastic strain rate do not need to be checkpointed,
     // so we don't have to distinguish averged/non-averaged variants.
@@ -149,7 +145,6 @@ void Output::write(const Variables& var, bool is_averaged)
 
     bin.write_array(*var.strain, "strain", var.strain->size());
     bin.write_array(*var.stress, "stress", var.stress->size());
-    // bin.write_array(*var.elastic_strain, "elastic_strain", var.elastic_strain->size());
     bin.write_array(*var.thermal_stress, "thermal_stress", var.thermal_stress->size());
 
     if (average_interval && is_averaged) {
@@ -224,15 +219,6 @@ void Output::write(const Variables& var, bool is_averaged)
     }
 }
 
-void Output::write_topography(const Variables& var, array_t& topography) {
-  const int topnodes = (var.bnodes[5]).size();
-  double* ff = topography.data();
-  for (int i = 0; i < topnodes; i++){
-    int index = (var.bnodes[5])[i];
-    ff[NDIMS-NDIMS] = (*var.coord)[index][NDIMS-NDIMS];
-    ff[NDIMS-1] = (*var.coord)[index][NDIMS-1];
-  }
-}
 
 void Output::average_fields(Variables& var)
 {

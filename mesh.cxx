@@ -36,7 +36,7 @@
 #ifdef WIN32
 #ifndef _MSC_VER
 namespace std {
-  static std::string to_string(long double t)
+  static std::string to_string(long double t) 
   {
     char temp[32];
     sprintf(temp,"%f",double(t));
@@ -368,7 +368,7 @@ void new_mesh_uniform_resolution(const Param& param, Variables& var)
         // corner 3
 	points[6] = param.mesh.xlength;
 	points[7] = 0;
-
+	
 	for (int i=0; i<n_init_segments; ++i) {
             // 0th node of the i-th segment
 	    init_segments[2*i] = i;
@@ -1623,3 +1623,5 @@ double** elem_center(const array_t &coord, const conn_t &connectivity)
     }
     return center;
 }
+
+

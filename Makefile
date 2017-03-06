@@ -19,7 +19,7 @@ useadapt=0
 
 ## Select C++ compiler
 ifeq ($(useadapt), 1)
-	CXX=mpic++-mpich-gcc49 # g++-mp-4.7
+	CXX = mpic++-mpich-gcc49 # g++-mp-4.7
 else
 	CXX=g++-mp-4.9
 endif

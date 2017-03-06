@@ -321,11 +321,6 @@ namespace {
         var.strain = b;
 
         b = new tensor_t(e);
-        inject_field(idx, is_changed, elems_vec, ratios_vec, *var.elastic_strain, *b);
-        delete var.elastic_strain;
-        var.elastic_strain = b;
-
-        b = new tensor_t(e);
         inject_field(idx, is_changed, elems_vec, ratios_vec, *var.stress, *b);
         delete var.stress;
         var.stress = b;
@@ -374,7 +369,7 @@ namespace {
         inject_field(idx, is_changed, elems_vec, ratios_vec, *var.denergy, *a);
         delete var.denergy;
         var.denergy = a;
-        
+
         a = new double_vec(e);
         inject_field(idx, is_changed, elems_vec, ratios_vec, *var.thermal_energy, *a);
         delete var.thermal_energy;

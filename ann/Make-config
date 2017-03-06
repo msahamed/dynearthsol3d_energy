@@ -71,7 +71,7 @@
 linux-g++:
 	$(MAKE) targets \
 	"ANNLIB = libANN.a" \
-	"C++ = mpic++-mpich-gcc49" \
+	"C++ = g++-mp-4.9" \
 	"CFLAGS = -O3" \
 	"MAKELIB = ar ruv" \
 	"RANLIB = true"

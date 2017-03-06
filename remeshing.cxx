@@ -43,11 +43,6 @@ bool is_bottom(uint flag)
     return flag & BOUNDZ0;
 }
 
-bool is_right(uint flag)
-{
-    return flag & BOUNDX1;
-}
-
 
 bool is_corner(uint flag)
 {
@@ -77,7 +72,7 @@ bool is_bottom_corner(uint flag)
 
 
 void flatten_bottom(const uint_vec &old_bcflag, double *qcoord,
-                    double bottom, double right, int_vec &points_to_delete, double min_dist)
+                    double bottom, int_vec &points_to_delete, double min_dist)
 {
     // find old nodes that are on or close to the bottom boundary
 
@@ -87,11 +82,6 @@ void flatten_bottom(const uint_vec &old_bcflag, double *qcoord,
             // restore edge nodes to initial depth
             qcoord[i*NDIMS + NDIMS-1] = bottom;
         }
-        if (is_right(flag)) {
-            // restore edge nodes to initial depth
-            qcoord[i*NDIMS + NDIMS-1] = right;
-        }
-
         else if (! is_boundary(flag) &&
                  std::fabs(qcoord[i*NDIMS + NDIMS-1] - bottom) < min_dist) {
             points_to_delete.push_back(i);
@@ -925,7 +915,7 @@ void new_mesh(const Param &param, Variables &var, int bad_quality,
         break;
     case 1:
     case 11:
-        flatten_bottom(old_bcflag, qcoord, -param.mesh.zlength, param.mesh.xlength,
+        flatten_bottom(old_bcflag, qcoord, -param.mesh.zlength,
                        points_to_delete, min_dist);
         break;
     case 2:

@@ -362,7 +362,7 @@ void compute_mass(const Param &param,
             double tm = (((*var.rho)[e] * mat.cp(e)) + (mat.alpha(e) * P)) * (volume[e] / NODES_PER_ELEM);
             //double tm = mat.rho(e) * mat.cp(e) * volume[e] / NODES_PER_ELEM;
             const int *conn = connectivity[e];
-
+            
             for (int i = 0; i < NODES_PER_ELEM; ++i)
             {
                 volume_n[conn[i]]  += volume[e];
