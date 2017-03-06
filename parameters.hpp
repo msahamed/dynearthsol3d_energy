@@ -264,7 +264,9 @@ struct Variables {
     double_vec *powerTerm;
     double_vec *pressureTerm;
     double_vec *densityTerm;
-
+    double_vec *thermal_energy;
+    double_vec *elastic_energy;
+    tensor_t *elastic_strain;
 
     array_t *vel, *force, *coord0, *topography;
     tensor_t *strain_rate, *strain, *stress, *cell_center;

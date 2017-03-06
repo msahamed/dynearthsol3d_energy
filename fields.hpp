@@ -17,4 +17,6 @@ void rotate_stress(const Variables &var, tensor_t &stress, tensor_t &strain);
 void update_density(const Variables& var, double_vec& rho,
                     double_vec& drho, tensor_t& strain_rate);
 void initial_material_properties(const Variables& var, double_vec& rho);
+void update_thermal_energy(const Variables& var, double_vec& thermal_energy);
+void update_elastic_energy(const Variables& var, double_vec& elastic_energy);
 #endif

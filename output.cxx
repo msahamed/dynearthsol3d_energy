@@ -5,9 +5,9 @@
 #include <iostream>
 
 #ifdef USE_OMP
-#include <omp.h>
+    #include <omp.h>
 #else
-#include <ctime>
+    #include <ctime>
 #endif
 
 #include "constants.hpp"
@@ -112,9 +112,11 @@ void Output::write(const Variables& var, bool is_averaged)
     bin.write_array(*var.pressureTerm, "temp_pressure", var.pressureTerm->size());
     bin.write_array(*var.densityTerm, "temp_density", var.densityTerm->size());
 
-    bin.write_array(*var.tenergy, "total_energy", var.tenergy->size());
-    bin.write_array(*var.venergy, "volumetric_energy", var.venergy->size());
-    bin.write_array(*var.denergy, "deviatoric_energy", var.denergy->size());
+    bin.write_array(*var.tenergy, "energy_total", var.tenergy->size());
+    bin.write_array(*var.venergy, "energy_volumetric", var.venergy->size());
+    bin.write_array(*var.denergy, "energy_deviatoric", var.denergy->size());
+    bin.write_array(*var.thermal_energy, "energy_thermal", var.thermal_energy->size());
+    bin.write_array(*var.elastic_energy, "energy_elastic", var.elastic_energy->size());
     bin.write_array(*var.plstrain, "plastic strain", var.plstrain->size());
 
     // bin.write_array(*var.cell_center, "cell_center", var.cell_center->size());
@@ -147,6 +149,7 @@ void Output::write(const Variables& var, bool is_averaged)
 
     bin.write_array(*var.strain, "strain", var.strain->size());
     bin.write_array(*var.stress, "stress", var.stress->size());
+    // bin.write_array(*var.elastic_strain, "elastic_strain", var.elastic_strain->size());
     bin.write_array(*var.thermal_stress, "thermal_stress", var.thermal_stress->size());
 
     if (average_interval && is_averaged) {
