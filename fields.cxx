@@ -35,7 +35,8 @@ void allocate_variables(const Param &param, Variables& var)
         var.strain = new tensor_t(e, 0);
         var.stress = new tensor_t(e, 0);
         var.stressyy = new double_vec(e, 0);
-        var.thermal_stress = new double_vec(e, 0);
+        var.elastic_strain = new tensor_t(e, 0);
+        var.thermal_stress = new double_vec(e);
         var.ediffStress = new double_vec(e);
         var.ndiffStress = new double_vec(n);
 
@@ -61,6 +62,7 @@ void allocate_variables(const Param &param, Variables& var)
     var.force = new array_t(n, 0);
 
     var.strain_rate = new tensor_t(e, 0);
+    // var.elastic_strain = new tensor_t(e, 0);
 
     var.shpdx = new shapefn(e);
     if (NDIMS == 3) var.shpdy = new shapefn(e);
