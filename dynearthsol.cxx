@@ -260,7 +260,7 @@ void isostasy_adjustment(const Param &param, Variables &var)
         update_strain_rate(var, *var.strain_rate);
         compute_dvoldt(var, *var.ntmp);
         compute_edvoldt(var, *var.ntmp, *var.edvoldt);
-        update_stress(var, *var.stress, *var.stressyy, *var.thermal_stress, *var.dP, *var.strain,
+        update_stress(var, *var.stress, *var.stressyy, *var.thermal_stress, *var.dP, *var.strain, *var.elastic_strain,
                       *var.plstrain, *var.delta_plstrain, *var.dtemp, *var.strain_rate, *var.power,
                       *var.tenergy, *var.venergy, *var.denergy);
         apply_NMD_to_Stress(var, *var.stress, *var.stressyy, *var.ediffStress, *var.ndiffStress, *var.dP);
@@ -352,7 +352,7 @@ int main(int argc, const char* argv[])
         update_strain_rate(var, *var.strain_rate);
         compute_dvoldt(var, *var.ntmp);
         compute_edvoldt(var, *var.ntmp, *var.edvoldt);
-        update_stress(var, *var.stress, *var.stressyy, *var.thermal_stress, *var.dP, *var.strain,
+        update_stress(var, *var.stress, *var.stressyy, *var.thermal_stress, *var.dP, *var.strain, *var.elastic_strain,
                       *var.plstrain, *var.delta_plstrain, *var.dtemp, *var.strain_rate, *var.power,
                       *var.tenergy, *var.venergy, *var.denergy);
         apply_NMD_to_Stress(var, *var.stress, *var.stressyy, *var.ediffStress, *var.ndiffStress, *var.dP);

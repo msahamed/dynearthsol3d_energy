@@ -147,6 +147,20 @@ static void viscous(double bulkm, double viscosity, double total_dv,
         s[i] = 2 * viscosity * edot[i];
 }
 
+static void compute_elastic_strain(const double* total_dstrain, const double depls1, const double depls2, double* estrain){
+    double cos2t, sin2t;
+    double p[2], des[2];
+    principal_stresses2(total_dstrain, p, cos2t, sin2t);
+    des[0] = p[0] - depls1;
+    des[1] = p[1] - depls2;
+
+    // principal strain to tensor
+    double dc2 = (des[0] - des[1]) * cos2t;
+    double dss = des[0] + des[1];
+    estrain[0] += 0.5 * (dss + dc2);
+    estrain[1] += 0.5 * (dss - dc2);
+    estrain[2] += 0.5 * (des[0] - des[1]) * sin2t;
+}
 
 static void elasto_plastic(double bulkm, double shearm,
                            double amc, double anphi, double anpsi,
@@ -302,8 +316,8 @@ static void elasto_plastic(double bulkm, double shearm,
 static void elasto_plastic2d(double bulkm, double shearm, double& t_power,
                              double& v_power, double& d_power, double amc,
                              double anphi, double anpsi, double hardn, double ten_max,
-                             const double* de, double& depls, double* s,
-                             double &syy, int &failure_mode, double thermal_stress)
+                             const double* de, double& depls, double* s, 
+                             double &syy, int &failure_mode, double thermal_stress, double* estrain)
 {
     /* Elasto-plasticity (Mohr-Coulomb criterion) */
 
@@ -467,6 +481,8 @@ static void elasto_plastic2d(double bulkm, double shearm, double& t_power,
     double deplsm = (depls1 + depls3) / 3;
     double vstress = (p[0]+p[1]+p[2])/3;
 
+    compute_elastic_strain(de, depls1, depls3, estrain);
+
     // 2nd invariant of plastic strain
     depls = 0.5 * std::fabs(alams + alams * anpsi);
     // plasticpower = (p[0] * depls1) + (p[2] * depls3);
@@ -521,7 +537,7 @@ static void elasto_plastic2d(double bulkm, double shearm, double& t_power,
 
 
 void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy, double_vec& thermal_stress, double_vec& dP,
-                   tensor_t& strain, double_vec& plstrain, double_vec& delta_plstrain, double_vec& dtemp,
+                   tensor_t& strain, tensor_t& elastic_strain, double_vec& plstrain, double_vec& delta_plstrain, double_vec& dtemp,
                    tensor_t& strain_rate, double_vec& power, double_vec& tenergy, double_vec& venergy, double_vec& denergy)
 {
     const int rheol_type = var.mat->rheol_type;
@@ -535,6 +551,7 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
         double& syy  = stressyy[e];
         double* es   = strain[e];
         double* edot = strain_rate[e];
+        double* estrain = elastic_strain[e];
 
         // anti-mesh locking correction on strain rate
         if(1){
@@ -628,7 +645,8 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
                 thermal_stress[e] += tstress;
 
                 if (var.mat->is_plane_strain) {
-                    elasto_plastic2d(bulkm, shearm, t_power,v_power, d_power, amc, anphi, anpsi, hardn, ten_max, de, depls, s, syy, failure_mode, tstress);
+                    elasto_plastic2d(bulkm, shearm, t_power,v_power, d_power, amc, anphi, anpsi, hardn, 
+                                    ten_max, de, depls, s, syy, failure_mode, tstress, estrain);
                 }
                 else {
                     elasto_plastic(bulkm, shearm, amc, anphi, anpsi, hardn, ten_max,
@@ -692,7 +710,7 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
                 if (var.mat->is_plane_strain) {
                     spyy = syy;
                     elasto_plastic2d(bulkm, shearm, t_power,v_power, d_power, amc, anphi, anpsi, hardn, ten_max,
-                                     de, depls, s, syy, failure_mode, tstress);
+                                     de, depls, s, syy, failure_mode, tstress, estrain);
                 }
                 else {
                     elasto_plastic(bulkm, shearm, amc, anphi, anpsi, hardn, ten_max,
