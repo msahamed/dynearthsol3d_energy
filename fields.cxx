@@ -156,17 +156,14 @@ void update_temperature(const Param &param, const Variables &var, double_vec &te
                              double_vec &dP, tensor_t &stress, tensor_t   &strain_rate, double_vec &stressyy,
                              double_vec &drho, double_vec &rho, double_vec &power, double_vec &powerTerm,
                              double_vec &pressureTerm, double_vec &densityTerm, double_vec &tdot) :
-                             var(var), temperature(temperature), temp_power(temp_power), temp_pressure(temp_pressure),
-                             temp_density(temp_density), dtemp(dtemp), dP(dP), stress(stress), strain_rate(strain_rate),
-                             stressyy(stressyy), drho(drho), rho(rho), power(power),pressureTerm(pressureTerm),
-                             powerTerm(powerTerm), densityTerm(densityTerm),tdot(tdot) {};
+                             var(var), temperature(temperature), temp_power(temp_power), temp_pressure(temp_pressure), temp_density(temp_density), dtemp(dtemp), dP(dP), stress(stress),strain_rate(strain_rate), stressyy(stressyy), drho(drho), rho(rho), power(power),pressureTerm(pressureTerm), powerTerm(powerTerm), densityTerm(densityTerm),tdot(tdot) {};
         void operator()(int e)
         {
             // diffusion matrix
             double D[NODES_PER_ELEM][NODES_PER_ELEM];
 
             const int *conn = (*var.connectivity)[e];
-            double kv = var.mat->k(e) *  (*var.volume)[e]; // thermal conductivity * volumn
+            double kv = var.mat->k(e) *  (*var.volume)[e]; // thermal conductivity * volume
             double* s = stress[e];
             double* edot = strain_rate[e];
             const double *shpdx = (*var.shpdx)[e];
@@ -302,7 +299,6 @@ void update_thermal_energy(const Variables& var,
 }
 
 void update_elastic_energy(const Variables& var, double_vec& elastic_energy){
-
     // #pragma omp parallel for default(none)      \
     // shared(var, stress, elastic_strain. volume, elastic_energy, std::cout);  
   for (int e = 0; e<var.nelem; ++e) {

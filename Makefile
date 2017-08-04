@@ -21,11 +21,12 @@ useadapt=0
 ifeq ($(useadapt), 1)
 	CXX = mpic++-mpich-gcc49 # g++-mp-4.7
 else
-	CXX=g++-mp-4.9
+	CXX=g++
+	CXX_BACKEND = ${CXX}
 endif
 
 ## Boost location and library name
-BOOST_ROOT_DIR = /opt/local/boost_1_57_0
+BOOST_ROOT_DIR = ${HOME}/Library/Boost
 
 
 ########################################################################
@@ -33,16 +34,28 @@ BOOST_ROOT_DIR = /opt/local/boost_1_57_0
 ## (Usually you won't need to modify anything below)
 ########################################################################
 
+OSNAME := $(shell uname -s)
+
 BOOST_LDFLAGS = -lboost_program_options
 ifdef BOOST_ROOT_DIR
-
-	BOOST_CXXFLAGS = -I$(BOOST_ROOT_DIR)
-	#BOOST_LDFLAGS += -L$(BOOST_ROOT_DIR)/lib -Wl,-rpath=$(BOOST_ROOT_DIR)/lib
-	BOOST_LDFLAGS += -L$(BOOST_ROOT_DIR)/stage/lib -Wl,-rpath,$(BOOST_ROOT_DIR)/stage/lib
-
+	# check existence of stage/ directory
+	has_stage_dir = $(wildcard $(BOOST_ROOT_DIR)/stage)
+	ifeq (, $(has_stage_dir))
+		# no stage dir, BOOST_ROOT_DIR is the installation directory
+		BOOST_CXXFLAGS = -I$(BOOST_ROOT_DIR)/include
+		BOOST_LIB_DIR = $(BOOST_ROOT_DIR)/lib
+	else
+		# with stage dir, BOOST_ROOT_DIR is the build directory
+		BOOST_CXXFLAGS = -I$(BOOST_ROOT_DIR)
+		BOOST_LIB_DIR = $(BOOST_ROOT_DIR)/stage/lib
+	endif
+	BOOST_LDFLAGS += -L$(BOOST_LIB_DIR)
+	ifneq ($(OSNAME), Darwin)  # Apple's ld doesn't support -rpath
+		BOOST_LDFLAGS += -Wl,-rpath=$(BOOST_LIB_DIR)
+	endif
 endif
 
-ifneq (, $(findstring g++, $(CXX))) # if using any version of g++
+ifneq (, $(findstring g++, $(CXX_BACKEND))) # if using any version of g++
 	CXXFLAGS = -g -std=c++0x
 	LDFLAGS = -lm
 
@@ -59,6 +72,33 @@ ifneq (, $(findstring g++, $(CXX))) # if using any version of g++
 	ifeq ($(openmp), 1)
 		CXXFLAGS += -fopenmp -DUSE_OMP
 		LDFLAGS += -fopenmp
+	endif
+
+	ifeq ($(useadapt), 1)
+		CXXFLAGS += -I$(VTK_INCLUDE)
+	endif
+
+else ifneq (, $(findstring icpc, $(CXX_BACKEND))) # if using intel compiler, tested with v14
+	CXXFLAGS = -g -std=c++0x
+	LDFLAGS = -lm
+
+	ifeq ($(opt), 1)
+		CXXFLAGS += -O1
+	else ifeq ($(opt), 2)
+		CXXFLAGS += -O2
+	else ifeq ($(opt), 3) # experimental, use at your own risk :)
+		CXXFLAGS += -fast -fast-transcendentals -fp-model fast=2
+	else # debugging flags
+		CXXFLAGS += -O0 -check=uninit -check-pointers=rw -check-pointers-dangling=all -fp-trap-all=all
+	endif
+
+	ifeq ($(openmp), 1)
+		CXXFLAGS += -fopenmp -DUSE_OMP
+		LDFLAGS += -fopenmp
+	endif
+
+	ifeq ($(useadapt), 1)
+		CXXFLAGS += -I$(VTK_INCLUDE)
 	endif
 
 else
