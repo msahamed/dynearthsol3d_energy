@@ -19,6 +19,7 @@
 #include "phasechanges.hpp"
 #include "remeshing.hpp"
 #include "rheology.hpp"
+#include "energy/energy.hpp"
 
 #ifdef WIN32
 #ifdef _MSC_VER
@@ -83,7 +84,7 @@ void init(const Param& param, Variables& var)
 
     compute_volume(*var.coord, *var.connectivity, *var.volume);
     *var.volume_old = *var.volume;
-    initial_material_properties(var, *var.rho);
+    // initial_material_properties(var, *var.rho);
     compute_mass(param, var.egroups, *var.connectivity, *var.volume, *var.mat,
                  var.max_vbc_val, *var.volume_n, *var.stressyy, *var.mass, *var.tmass, var);
     compute_shape_fn(*var.coord, *var.connectivity, *var.volume, var.egroups,
@@ -120,8 +121,6 @@ void restart(const Param& param, Variables& var)
             if (frame == param.sim.restarting_from_frame)
                 break;
         }
-
-
 
         var.steps = steps;
         var.nnode = nnode;
@@ -313,6 +312,10 @@ int main(int argc, const char* argv[])
     // run simulation
     //
     static Variables var; // declared as static to silence valgrind's memory leak detection
+#ifdef ENERGY
+    static Energy eng(param, var);
+#endif
+
     init_var(param, var);
 
     Output output(param, start_time,
@@ -320,6 +323,11 @@ int main(int argc, const char* argv[])
 
     if (! param.sim.is_restarting) {
         init(param, var);
+
+#ifdef ENERGY
+        eng.allocate_energy_variables(param, var);
+        eng.initial_material_properties(var, *eng.rho);
+#endif
 
         if (param.ic.isostasy_adjustment_time_in_yr > 0) {
             // output.write(var, false);
@@ -345,20 +353,25 @@ int main(int argc, const char* argv[])
         var.time += var.dt;
 
         if (param.control.has_thermal_diffusion)
-        update_temperature(param, var, *var.temperature, *var.temp_power, *var.temp_pressure,
-                          *var.temp_density, *var.dtemp, *var.dP, *var.ntmp, *var.stress,
-                          *var.strain_rate, *var.stressyy, *var.drho, *var.rho, *var.power,
-                          *var.powerTerm, *var.pressureTerm, *var.densityTerm);
+#ifdef ENERGY
+        eng.update_temperature(param, var, *var.temperature, *eng.temp_power, *eng.temp_pressure,
+                          *eng.temp_density, *eng.dtemp, *eng.dP, *var.ntmp, *var.stress,
+                          *var.strain_rate, *var.stressyy, *eng.drho, *eng.rho, *eng.power,
+                          *eng.powerTerm, *eng.pressureTerm, *eng.densityTerm);
+#endif
         update_strain_rate(var, *var.strain_rate);
         compute_dvoldt(var, *var.ntmp);
         compute_edvoldt(var, *var.ntmp, *var.edvoldt);
-        update_stress(var, *var.stress, *var.stressyy, *var.thermal_stress, *var.dP, *var.strain, *var.elastic_strain,
+
+#ifdef ENERGY
+        eng.update_stress(var, *var.stress, *var.stressyy, *var.thermal_stress, *var.dP, *var.strain, *var.elastic_strain,
                       *var.plstrain, *var.delta_plstrain, *var.dtemp, *var.strain_rate, *var.power,
                       *var.tenergy, *var.venergy, *var.denergy);
-        apply_NMD_to_Stress(var, *var.stress, *var.stressyy, *var.ediffStress, *var.ndiffStress, *var.dP);
-        update_density(var, *var.rho, *var.drho, *var.strain_rate);
-        update_thermal_energy(var, *var.thermal_energy);
-        update_elastic_energy(var, *var.elastic_energy);
+        eng.apply_NMD_to_Stress(var, *var.stress, *var.stressyy, *eng.ediffStress, *eng.ndiffStress, *eng.dP);
+        eng.update_density(var, *eng.rho, *eng.drho, *var.strain_rate);
+        eng.update_thermal_energy(var, *eng.thermal_energy);
+        eng.update_elastic_energy(var, *eng.elastic_energy);
+#endif
         update_force(param, var, *var.force);
         update_velocity(var, *var.vel);
         apply_vbcs(param, var, *var.vel);

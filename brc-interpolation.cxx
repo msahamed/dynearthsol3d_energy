@@ -255,17 +255,17 @@ void barycentric_node_interpolation(Variables &var,
     interpolate_field(brc, el, old_connectivity, *var.coord0, *b);
     delete var.coord0;
     var.coord0 = b;
-
 }
 
 
-void barycentric_node_interpolation_forT(const Variables &var,
-                                         const Barycentric_transformation &bary,
-                                         const array_t &input_coord,
-                                         const conn_t &input_connectivity,
-                                         const std::vector<int_vec> &input_support,
-					 const double_vec &inputtemperature,
-					 double_vec &outputtemperature)
+void barycentric_node_interpolation_forT(
+                    const Variables &var,
+                    const Barycentric_transformation &bary,
+                    const array_t &input_coord,
+                    const conn_t &input_connectivity,
+                    const std::vector<int_vec> &input_support,
+                    const double_vec &inputtemperature,
+                    double_vec &outputtemperature)
 {
     int_vec el(var.nnode);
     brc_t brc(var.nnode);

@@ -1,9 +1,9 @@
 # -*- Makefile -*-
 #
 # Makefile for DynEarthSol3D
-#
+
 # Author: Eh Tan <tan2@earth.sinica.edu.tw>
-#
+# Energy module Author: sabber ahamed<sabbers@gmail.com>
 
 ## Execute "make" if making production run. Or "make opt=0 openmp=0" for debugging run.
 ##
@@ -11,11 +11,14 @@
 ## opt = 1 ~ 3: optimized build; others: debugging build
 ## openmp = 1: enable OpenMP
 ## useadapt = 1: use libadaptivity for mesh optimization during remeshing
+## energy = 1: use full energy balance equation and its associated functions like :
+## 			update_thermal_energy
 
 ndims=2
 opt=2
 openmp=0
 useadapt=0
+energy=1
 
 ## Select C++ compiler
 ifeq ($(useadapt), 1)
@@ -118,12 +121,18 @@ else
 	REMESHING_FILE = remeshing.cxx
 endif
 
+## Energy balance files
+ifeq ($(energy), 1)
+	ENERGY_FILE = energy/energy.cxx
+endif
+
 SRCS =	\
 	barycentric-fn.cxx \
 	brc-interpolation.cxx \
 	bc.cxx \
 	binaryio.cxx \
 	dynearthsol.cxx \
+	$(ENERGY_FILE)\
 	fields.cxx \
 	geometry.cxx \
 	ic.cxx \
@@ -175,6 +184,10 @@ ifeq ($(ndims), 3)
 	M_INCS += $(TET_INCS)
 	M_OBJS += $(TET_OBJS)
 	CXXFLAGS += -DTHREED
+endif
+
+ifeq ($(energy), 1)
+	CXXFLAGS += -DENERGY
 endif
 
 C3X3_DIR = 3x3-C

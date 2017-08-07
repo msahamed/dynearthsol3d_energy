@@ -36,24 +36,25 @@ void allocate_variables(const Param &param, Variables& var)
         var.stress = new tensor_t(e, 0);
         var.stressyy = new double_vec(e, 0);
         var.elastic_strain = new tensor_t(e, 0);
-        var.thermal_stress = new double_vec(e, 0);
-        var.ediffStress = new double_vec(e);
-        var.ndiffStress = new double_vec(n);
+        
+        // var.thermal_stress = new double_vec(e, 0);
+        // var.ediffStress = new double_vec(e);
+        // var.ndiffStress = new double_vec(n);
 
-        // Energy balance equation related variables :
-        var.dtemp = new double_vec(n); // Temperature difference
-        var.dP    = new double_vec(e);    // Pressure difference
-        var.rho   = new double_vec(e);   // density
-        var.drho  = new double_vec(e);   // density difference
-        var.power    = new double_vec(e);
-        var.tenergy    = new double_vec(e);
-        var.venergy    = new double_vec(e);
-        var.denergy    = new double_vec(e);
-        var.powerTerm  = new double_vec(n);
-        var.pressureTerm     = new double_vec(n);
-        var.densityTerm      = new double_vec(n);
-        var.thermal_energy = new double_vec(e);
-        var.elastic_energy = new double_vec(e);
+        // // Energy balance equation related variables :
+        // var.dtemp = new double_vec(n); // Temperature difference
+        // var.dP    = new double_vec(e);    // Pressure difference
+        // var.rho   = new double_vec(e);   // density
+        // var.drho  = new double_vec(e);   // density difference
+        // var.power    = new double_vec(e);
+        // var.tenergy    = new double_vec(e);
+        // var.venergy    = new double_vec(e);
+        // var.denergy    = new double_vec(e);
+        // var.powerTerm  = new double_vec(n);
+        // var.pressureTerm     = new double_vec(n);
+        // var.densityTerm      = new double_vec(n);
+        // var.thermal_energy = new double_vec(e);
+        // var.elastic_energy = new double_vec(e);
 
     }
 
@@ -250,64 +251,6 @@ void update_temperature(const Param &param, const Variables &var, double_vec &te
         dtemp[n]          = temperature[n] - temp_old;
       }
     }
-}
-
-
-void initial_material_properties(const Variables& var, double_vec& rho) {
-
-    for (int e = 0; e<var.nelem; ++e) {
-        rho[e] = var.mat->rho(e);
-    }
-}
-
-void update_density(const Variables& var, double_vec& rho,
-                    double_vec& drho, tensor_t& strain_rate)
-{
-   for (int e = 0; e<var.nelem; ++e) {
-      double rho_old  = 0;
-      rho_old = rho[e];
-      double *edot = (*var.strain_rate)[e];
-
-#ifdef THREED
-      double vedot = edot[0]+ edot[1] + edot[2];
-#else
-      double vedot = edot[0]+ edot[1];
-#endif
-
-      rho[e]  = rho_old * (1 - var.dt * vedot);
-      drho[e] = rho[e] - rho_old;
-   }
-}
-
-
-void update_thermal_energy(const Variables& var, 
-                            double_vec& thermal_energy){
-
-  // #pragma omp parallel for default(none)      \
-  // shared(var, connectivity, temperature. volume, thermal_energy, std::cout);
-  for (int e = 0; e<var.nelem; ++e) {
-      const int *conn = (*var.connectivity)[e];
-      double temp =0.0;
-      for (int i = 0; i < NODES_PER_ELEM; ++i) {
-          temp += (*var.temperature)[conn[i]];
-      }
-      double T = temp / NODES_PER_ELEM;
-      double vol = (*var.volume)[e];
-      thermal_energy[e] = var.mat->rho(e)* var.mat->cp(e) * T * vol;
-      //std::cout<<thermal_energy[e]<< ": "<< var.mat->rho(e) << " : " << T  << " : " << vol << std::endl;
-  }
-}
-
-void update_elastic_energy(const Variables& var, double_vec& elastic_energy){
-    // #pragma omp parallel for default(none)      \
-    // shared(var, stress, elastic_strain. volume, elastic_energy, std::cout);  
-  for (int e = 0; e<var.nelem; ++e) {
-      double* s = (*var.stress)[e];
-      double* es = (*var.elastic_strain)[e];
-      double energy = 0.0;
-      for (int el = 0; el< NSTR; el++) energy += s[el] * es[el];
-      elastic_energy[e] = energy * (*var.volume)[e];
-  }
 }
 
 void update_strain_rate(const Variables& var, tensor_t& strain_rate)

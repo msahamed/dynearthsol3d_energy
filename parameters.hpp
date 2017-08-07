@@ -148,7 +148,6 @@ struct IC {
     std::string Nodes_filename;
     std::string Connectivity_filename;
     double oceanic_plate_age_in_yr;
-
     double isostasy_adjustment_time_in_yr;
 };
 
@@ -244,31 +243,30 @@ struct Variables {
 
     double_vec *volume, *volume_old, *volume_n;
     double_vec *mass, *tmass;
-    double_vec *edvoldt, *ediffStress, *ndiffStress;
+    double_vec *edvoldt;
 
     // double_vec *enmdStress;
     double_vec *temperature, *plstrain, *delta_plstrain;
     double_vec *temp_power, *temp_pressure, *temp_density;
-    double_vec *stressyy, *z0, *thermal_stress;
+    double_vec *stressyy, *z0;
 
     double_vec *ntmp;
 
     // energy balance equation related variables
-    double_vec *dtemp;
-    double_vec *dP;
-    double_vec *rho;
-    double_vec *drho;
-    double_vec *power;
-    double_vec *tenergy;
-    double_vec *venergy;
-    double_vec *denergy;
-    double_vec *powerTerm;
-    double_vec *pressureTerm;
-    double_vec *densityTerm;
-    double_vec *thermal_energy;
-    double_vec *elastic_energy;
+    // double_vec *dtemp;
+    // double_vec *dP;
+    // double_vec *rho;
+    // double_vec *drho;
+    // double_vec *power;
+    // double_vec *tenergy;
+    // double_vec *venergy;
+    // double_vec *denergy;
+    // double_vec *powerTerm;
+    // double_vec *pressureTerm;
+    // double_vec *densityTerm;
+    // double_vec *thermal_energy, *ediffStress, *ndiffStress;
+    // double_vec *elastic_energy, *thermal_stress;
     tensor_t *elastic_strain;
-
 
     array_t *vel, *force, *coord0;
     tensor_t *strain_rate, *strain, *stress;

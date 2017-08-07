@@ -17,4 +17,4 @@ ann/lib/libANN.a
 result/
 .hg
 .hgignore
-
+.vscode
