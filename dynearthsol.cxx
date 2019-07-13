@@ -354,11 +354,14 @@ int main(int argc, const char* argv[])
 
         if (param.control.has_thermal_diffusion)
 #ifdef ENERGY
-        eng.update_temperature(param, var, *var.temperature, *eng.temp_power, *eng.temp_pressure,
+        eng.update_energy_balance(param, var, *var.temperature, *eng.temp_power, *eng.temp_pressure,
                           *eng.temp_density, *eng.dtemp, *eng.dP, *var.ntmp, *var.stress,
                           *var.strain_rate, *var.stressyy, *eng.drho, *eng.rho, *eng.power,
                           *eng.powerTerm, *eng.pressureTerm, *eng.densityTerm);
+#else
+        
 #endif
+
         update_strain_rate(var, *var.strain_rate);
         compute_dvoldt(var, *var.ntmp);
         compute_edvoldt(var, *var.ntmp, *var.edvoldt);
