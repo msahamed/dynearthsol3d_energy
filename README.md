@@ -18,11 +18,10 @@ conservation. For anything about these implementations please feel free
 to contact :
 
 Sabber Ahamed
-msahamed@memphis.edu
-Center For Earthquake Research and Information (CERI)
-The University of Memphis
-3890 Central Ave
-Memphis, TN 38152, USA
+sabbers@gmail.com 
+Senior Data Scientist
+Bridgestone America
+Nashville, TN, USA
 
 ### Installation
 
