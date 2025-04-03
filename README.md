@@ -25,42 +25,32 @@ Nashville, TN, USA
 
 ### Installation
 
-<li> You will need a recent C++ compiler that supports C++11 standard. (GNU g++
-  4.4 or newer version will suffice.)
+<li> You will need a C++ compiler that supports C++17 standard or higher. (GNU g++
+  7.0 or newer version will suffice.)
+<li> You will need CMake 3.14 or newer.
 <li> You will need a recent version of Boost::Program_options library (1.42 or
-  newer version). Instructions for building the library:
-  -- Download the source code from www.boost.org
-  -- In the untarred source directory, run "./bootstrap.sh"
-  -- In the same directory, run "./b2 --with-program_options -q" to build
-     the library.
-<li> You will need Python 2.6+ or 3.2+ and the Numpy package.
+  newer version).
+<li> You will need Python 3.6+ with Numpy and Matplotlib packages.
 
 For libadaptiviy, you further need
 <li> VTK (v.5.10 tested) built from source or development packages.
 <li> MPI (openmpi-1.6.1 tested).
 
 Build procedure:
-- libadaptivity
-<li> Run "LDFLAGS=-L${VTK_LIBDIR} ./configure" in libadaptivity
-<li> Run "make".
-<li> Run "make" in tests/. Depending on the flavor of MPI, one might need to add '-lmpi_f77' to LIBS in Makefile.
+- Using the build script:
+<li> Run the included build script: `./build.sh` 
+<li> This will configure and build the code with default options.
+<li> For different configurations, run `./build.sh --help` to see available options.
 
-- DES3D
-<li> Edit 'Makefile', 
-  1) modify BOOST_ROOT_DIR if you manually built or installed 
-  boost library. If you followed the instructions above to build 
-  Boost::Program_options library, set BOOST_ROOT_DIR to the untarred boost
-  directory.
-  2) turn on 'useadapt' to use libadaptivity.
-  3) Set 'ndims = 3'. libadaptivity works only for 3D.
-  4) Check if VTK_INC path is correct.
-  5) Copy LIBS in libadaptivity/tests/Makefile to LIBADAPTIVITY_LIBS.
-  6) Make sure that the path to libadaptivity.a is correctly set in the beginning of LIBADAPTIVITY_LIBS. 
-     $(LIBADAPTIVITY_LIB)/libadaptivity.a will do.
+- Manual CMake build:
+<li> Create a build directory: `mkdir build && cd build`
+<li> Configure with CMake: `cmake .. -DCMAKE_BUILD_TYPE=Release -DWITH_3D=OFF`
+<li> Build the code: `make -j4`
 
-<li> Run "make opt=0" to build a debugging executable.
-<li> Run "make openmp=0" to build the executable without OpenMP. This is
-  necessary to debug the code under valgrind.
+- Build options:
+<li> `-DWITH_3D=ON/OFF` to build 2D or 3D version
+<li> `-DWITH_OPENMP=ON/OFF` to enable/disable OpenMP
+<li> `-DWITH_ADAPTIVITY=ON/OFF` to enable/disable mesh adaptivity
 
 ### How to run
 
@@ -74,11 +64,17 @@ Build procedure:
 
 ### How to plot
 
-<li> Run "2vtk.py modelname" to convert the binary output to VTK files.
-<li> Execute 2vtk.py with '-h' flag to see more usage information.
-<li> Some of the simulation outputs might be disabled. Edit 2vtk.py and
-  output.cxx to disable/enable them.
+<li> The simulation now outputs VTK files directly in a well-organized output directory structure.
+<li> Output is organized into three main directories:
+  <ul>
+  <li> `output/runs/<modelname>/` - Contains binary simulation data (.save, .info, .chkpt files)
+  <li> `output/vtk/<modelname>/` - Contains VTK visualization files
+  <li> `output/viz/<modelname>/` - Contains visualization outputs (images, animations)
+  </ul>
+<li> Run "python plot_domain.py modelname" to create visualization plots of the domain.
+<li> Run "python utils/animate_simulation.py modelname" to create animations of the temperature and stress fields over time.
 <li> Plot the VTK files with Paraview or LLNL's Visit program.
+<li> See the README.md in the output directory for more details on the output organization.
 
 
 ### Bug reports

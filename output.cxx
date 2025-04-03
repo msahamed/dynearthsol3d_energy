@@ -17,6 +17,12 @@
 #include "markerset.hpp"
 #include "matprops.hpp"
 #include "output.hpp"
+#include "vtk_output.hpp"
+
+// Forward declarations for vtk_output namespace
+namespace vtk_output {
+    void setup_output_directories(const std::string& modelname);
+}
 
 #ifdef WIN32
 #ifdef _MSC_VER
@@ -39,7 +45,7 @@ Output::~Output()
 {}
 
 
-void Output::write_info(const Variables& var, double dt)
+void Output::write_info(const Variables& var, double dt, const char* custom_filename)
 {
 #ifdef USE_OMP
     double run_time = omp_get_wtime() - start_time;
@@ -52,12 +58,21 @@ void Output::write_info(const Variables& var, double dt)
                   frame, var.steps, var.time, dt, run_time,
                   var.nnode, var.nelem, var.nseg);
 
-    std::string filename(modelname + ".info");
+    const char* filename;
+    char default_filename[256];
+    
+    if (custom_filename) {
+        filename = custom_filename;
+    } else {
+        std::snprintf(default_filename, 255, "%s.info", modelname.c_str());
+        filename = default_filename;
+    }
+    
     std::FILE* f;
     if (frame == 0)
-        f = std::fopen(filename.c_str(), "w");
+        f = std::fopen(filename, "w");
     else
-        f = std::fopen(filename.c_str(), "a");
+        f = std::fopen(filename, "a");
 
     if (f == NULL) {
         std::cerr << "Error: cannot open file '" << filename << "' for writing\n";
@@ -83,10 +98,20 @@ void Output::write(const Variables& var, bool is_averaged)
         dt = (var.time - time0) / average_interval;
         inv_dt = 1.0 / (var.time - time0);
     }
-    write_info(var, dt);
+    // Ensure output directories exist
+    vtk_output::setup_output_directories(modelname);
+    
+    // Get run-specific directory
+    std::string run_dir = vtk_output::get_run_directory(modelname);
+    
+    char info_filename[512];
+    std::snprintf(info_filename, 511, "%s/runs/%s.info", 
+                 run_dir.c_str(), modelname.c_str());
+    write_info(var, dt, info_filename);
 
-    char filename[256];
-    std::snprintf(filename, 255, "%s.save.%06d", modelname.c_str(), frame);
+    char filename[512];
+    std::snprintf(filename, 511, "%s/runs/%s.save.%06d", 
+                 run_dir.c_str(), modelname.c_str(), frame);
     BinaryOutput bin(filename);
 
     bin.write_array(*var.coord, "coordinate", var.coord->size());
@@ -197,6 +222,10 @@ void Output::write(const Variables& var, bool is_averaged)
     }
 
     bin.close();
+    
+    // Also write VTK output
+    vtk_output::write_vtk_file(var, frame, dt, modelname);
+    
     std::cout << "  Output # " << frame
               << ", step = " << var.steps
               << ", time = " << var.time / YEAR2SEC << " yr"
@@ -266,8 +295,12 @@ void Output::average_fields(Variables& var)
 
 void Output::write_checkpoint(const Param& param, const Variables& var)
 {
-    char filename[256];
-    std::snprintf(filename, 255, "%s.chkpt.%06d", modelname.c_str(), frame);
+    // Get run-specific directory
+    std::string run_dir = vtk_output::get_run_directory(modelname);
+    
+    char filename[512];
+    std::snprintf(filename, 511, "%s/runs/%s.chkpt.%06d", 
+                 run_dir.c_str(), modelname.c_str(), frame);
     BinaryOutput bin(filename);
 
     double_vec tmp(2);

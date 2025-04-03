@@ -117,9 +117,9 @@ void triangulate_polygon
     set_2d_quality_str(quality, min_angle);
 
     if( nregions > 0 )
-        std::sprintf(options, "%s%spjz%sA", verbosity.c_str(), quality.c_str(), vol.c_str());
+        std::snprintf(options, sizeof(options), "%s%spjz%sA", verbosity.c_str(), quality.c_str(), vol.c_str());
     else
-        std::sprintf(options, "%s%spjz%s", verbosity.c_str(), quality.c_str(), vol.c_str());
+        std::snprintf(options, sizeof(options), "%s%spjz%s", verbosity.c_str(), quality.c_str(), vol.c_str());
 
     if( meshing_verbosity >= 0 )
         std::cout << "The meshing option is: " << options << '\n';

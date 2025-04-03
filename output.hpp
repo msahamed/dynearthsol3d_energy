@@ -19,7 +19,7 @@ private:
     tensor_t stress_avg;
     double_vec delta_plstrain_avg;
 
-    void write_info(const Variables& var, double dt);
+    void write_info(const Variables& var, double dt, const char* custom_filename = nullptr);
 
 public:
     Output(const Param& param, double start_time, int start_frame);

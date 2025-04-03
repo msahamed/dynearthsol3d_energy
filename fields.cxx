@@ -477,9 +477,10 @@ void update_coordinate(const Variables& var, array_t& coord)
 
 namespace {
 
+#ifdef THREED
     void jaumann_rate_3d(double *s, double dt, double w3, double w4, double w5)
     {
-        double s_inc[NSTR];
+        double s_inc[6]; // Using fixed size 6 for 3D
 
         s_inc[0] =-2.0 * s[3] * w3 - 2.0 * s[4] * w4;
         s_inc[1] = 2.0 * s[3] * w3 - 2.0 * s[5] * w5;
@@ -488,10 +489,17 @@ namespace {
         s_inc[4] = s[0] * w4 - s[2] * w4 + s[3] * w5 - s[5] * w3;
         s_inc[5] = s[1] * w5 - s[2] * w5 + s[3] * w4 + s[4] * w3;
 
-        for(int i=0; i<NSTR; ++i)  {
+        for(int i=0; i<6; ++i) {
             s[i] += dt * s_inc[i];
         }
     }
+#else
+    // Dummy function for 2D builds to avoid "unused function" warnings
+    void jaumann_rate_3d(double *s, double dt, double w3, double w4, double w5)
+    {
+        // Do nothing in 2D mode
+    }
+#endif
 
 
     void jaumann_rate_2d(double *s, double dt, double w2)

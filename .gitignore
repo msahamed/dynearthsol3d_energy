@@ -1,20 +1,94 @@
-syntax:glob
+# Compiled Object files
+*.o
+*.ko
+*.obj
+*.elf
+*.slo
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Compiled Static libraries
+*.a
+*.la
+*.lai
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
 dynearthsol2d
 dynearthsol3d
-snapshot.diff
-3x3-C/lib3x3.a
-ann/lib/libANN.a
-*.o
-*.pyc
-*.vtu
-*[0-9]
-*.info
-*.orig
-*.rej
-*.bak
-*.py
-*.cfg
-result/
-.hg
-.hgignore
 
+# Build directories
+build/
+cmake-build-*/
+
+# Generated files
+*.vtk
+*.save.*
+*.chkpt.*
+*.info
+*.diff
+snapshot.diff
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Output files
+*.png
+*.jpg
+*.vtk
+*.vtu
+*.vtp
+*.pvd
+*.dat
+test_run*
+my_simulation*
+test_timestamped*
+
+# Output directories
+output/
+*_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]_[0-9][0-9][0-9][0-9][0-9][0-9]/
+
+# Visualization tools
+*.visit
+*.ensight
+*.ex2
+*.xmf
+*.xdmf
