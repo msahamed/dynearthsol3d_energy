@@ -537,49 +537,91 @@ static void elasto_plastic2d(double bulkm, double shearm, double& t_power,
 
 
 void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy, double_vec& thermal_stress, double_vec& dP,
-                   tensor_t& strain, tensor_t& elastic_strain, double_vec& plstrain, double_vec& delta_plstrain, double_vec& dtemp,
-                   tensor_t& strain_rate, double_vec& power, double_vec& tenergy, double_vec& venergy, double_vec& denergy)
+                    tensor_t& strain, tensor_t& elastic_strain, double_vec& plstrain, double_vec& delta_plstrain, double_vec& dtemp,
+                    tensor_t& strain_rate, double_vec& power, double_vec& tenergy, double_vec& venergy, double_vec& denergy)
 {
     const int rheol_type = var.mat->rheol_type;
-
-    #pragma omp parallel for default(none)                           \
-         shared(var, stress, stressyy, power, dP, dtemp, strain, plstrain, delta_plstrain, strain_rate, std::cerr)
-    for (int e=0; e<var.nelem; ++e) {
-
-        // stress, strain and strain_rate of this element
-        double* s    = stress[e];
-        double& syy  = stressyy[e];
-        double* es   = strain[e];
-        double* edot = strain_rate[e];
-        double* estrain = elastic_strain[e];
-
-        // anti-mesh locking correction on strain rate
-        if(1){
-            double div = trace(edot);
-            //double div2 = ((*var.volume)[e] / (*var.volume_old)[e] - 1) / var.dt;
-            for (int i=0; i<NDIMS; ++i) {
-                edot[i] += ((*var.edvoldt)[e] - div) / NDIMS;  // XXX: should NDIMS -> 3 in plane strain?
-            }
-        }
-
-
+    const size_t nelem = var.nelem;
+    const size_t chunk_size = 64; // Cache-friendly chunk size
+    
+    // Pre-allocate arrays for better memory locality
+    std::vector<double> de_buffer(nelem * NSTR);
+    std::vector<double> dT_buffer(nelem);
+    
+    // First pass: compute dT and de for all elements
+    #pragma omp parallel for default(none) \
+        shared(var, dT_buffer, de_buffer, strain_rate, strain, dtemp, nelem, chunk_size) \
+        schedule(static, chunk_size)
+    for (int e=0; e<nelem; ++e) {
+        // Compute dT
         double dT = 0;
         const int *conn = (*var.connectivity)[e];
         for (int i = 0; i < NODES_PER_ELEM; ++i) {
-          dT += dtemp[conn[i]];
+            dT += dtemp[conn[i]];
         }
-        dT /= NODES_PER_ELEM;
-
-        double de[NSTR];
+        dT_buffer[e] = dT / NODES_PER_ELEM;
+        
+        // Compute de
+        double* de = &de_buffer[e * NSTR];
+        double* edot = strain_rate[e];
+        double* es = strain[e];
+        
+        // anti-mesh locking correction on strain rate
+        if(1){
+            double div = trace(edot);
+            #pragma omp simd
+            for (int i=0; i<NDIMS; ++i) {
+                edot[i] += ((*var.edvoldt)[e] - div) / NDIMS;
+            }
+        }
+        
+        // normal components
+        for (int i = 0; i<NDIMS; ++i){
+            es[i] += (edot[i] * var.dt);
+            de[i] = edot[i] * var.dt;
+        }
+        
+        // Shear components
+        for (int i = NDIMS; i<NSTR; ++i) {
+            es[i] += edot[i] * var.dt;
+            de[i] = edot[i] * var.dt;
+        }
+    }
+    
+    // Second pass: update stress with pre-computed values
+    #pragma omp parallel for default(none) \
+        shared(var, stress, stressyy, power, dP, strain, plstrain, delta_plstrain, \
+                strain_rate, tenergy, venergy, denergy, de_buffer, dT_buffer, \
+                elastic_strain, thermal_stress, rheol_type, nelem, chunk_size, std::cerr) \
+        schedule(static, chunk_size)
+    for (int e=0; e<nelem; ++e) {
+        // Prefetch next iteration's data
+        if (e < nelem - 1) {
+            const double *next_stress = stress[e+1];
+            const double *next_strain = strain[e+1];
+            const double *next_strain_rate = strain_rate[e+1];
+            __builtin_prefetch(next_stress, 0, 3);
+            __builtin_prefetch(next_strain, 0, 3);
+            __builtin_prefetch(next_strain_rate, 0, 3);
+        }
+        
+        double* s = stress[e];
+        double& syy = stressyy[e];
+        double* es = strain[e];
+        double* edot = strain_rate[e];
+        double* estrain = elastic_strain[e];
+        double* de = &de_buffer[e * NSTR];
+        double dT = dT_buffer[e];
+        
         double alpha = var.mat->alpha(e);
         // double thermal_strain = (alpha * dT)/3;
 
         // normal components
         for (int i = 0; i<NDIMS; ++i){
-           es[i] += (edot[i] * var.dt); // + thermal_strain;
-           de[i] =  (edot[i] * var.dt); // + thermal_strain;
+            es[i] += (edot[i] * var.dt); // + thermal_strain;
+            de[i] =  (edot[i] * var.dt); // + thermal_strain;
         }
-
+        
         // Shear components
         for (int i = NDIMS; i<NSTR; ++i) {
             es[i] += edot[i] * var.dt;
@@ -632,7 +674,7 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
                 double shearm = var.mat->shearm(e);
                 double amc, anphi, anpsi, hardn, ten_max;
                 var.mat->plastic_props(e, plstrain[e],
-                                       amc, anphi, anpsi, hardn, ten_max);
+                                        amc, anphi, anpsi, hardn, ten_max);
                 int failure_mode;
 
 #ifdef THREED
@@ -646,11 +688,11 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
 
                 if (var.mat->is_plane_strain) {
                     elasto_plastic2d(bulkm, shearm, t_power,v_power, d_power, amc, anphi, anpsi, hardn, 
-                                    ten_max, de, depls, s, syy, failure_mode, tstress, estrain);
+                                     ten_max, de, depls, s, syy, failure_mode, tstress, estrain);
                 }
                 else {
                     elasto_plastic(bulkm, shearm, amc, anphi, anpsi, hardn, ten_max,
-                                   de, depls, s, failure_mode);
+                                    de, depls, s, failure_mode);
                 }
 
 #ifdef THREED
@@ -667,8 +709,6 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
                 tenergy[e] += t_power;
                 venergy[e] += v_power;
                 denergy[e] += d_power;
-
-
             }
             break;
         case MatProps::rh_evp:
@@ -676,11 +716,11 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
                 double t_power = 0;
                 double v_power = 0;
                 double d_power = 0;
-                double depls        = 0;
-                double bulkm        = var.mat->bulkm(e);
-                double shearm       = var.mat->shearm(e);
-                double viscosity    = var.mat->visc(e);
-                double dv           = (*var.volume)[e] / (*var.volume_old)[e] - 1;
+                double depls = 0;
+                double bulkm = var.mat->bulkm(e);
+                double shearm = var.mat->shearm(e);
+                double viscosity = var.mat->visc(e);
+                double dv = (*var.volume)[e] / (*var.volume_old)[e] - 1;
 
                 // stress due to maxwell rheology
                 double sv[NSTR];
@@ -690,19 +730,12 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
 
                 double amc, anphi, anpsi, hardn, ten_max;
                 var.mat->plastic_props(e, plstrain[e],
-                                       amc, anphi, anpsi, hardn, ten_max);
+                                        amc, anphi, anpsi, hardn, ten_max);
 
                 // stress due to elasto-plastic rheology
                 double sp[NSTR], spyy;
                 for (int i=0; i<NSTR; ++i) sp[i] = s[i];
                 int failure_mode;
-
-                double dT = 0;
-                const int *conn = (*var.connectivity)[e];
-                for (int i = 0; i < NODES_PER_ELEM; ++i) {
-                     dT += dtemp[conn[i]];
-                }
-                dT /= NODES_PER_ELEM;
 
                 double tstress = -bulkm * alpha * dT;;
                 thermal_stress[e] += tstress;
@@ -710,11 +743,11 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
                 if (var.mat->is_plane_strain) {
                     spyy = syy;
                     elasto_plastic2d(bulkm, shearm, t_power,v_power, d_power, amc, anphi, anpsi, hardn, ten_max,
-                                     de, depls, s, syy, failure_mode, tstress, estrain);
+                                      de, depls, s, syy, failure_mode, tstress, estrain);
                 }
                 else {
                     elasto_plastic(bulkm, shearm, amc, anphi, anpsi, hardn, ten_max,
-                                   de, depls, sp, failure_mode);
+                                    de, depls, sp, failure_mode);
                 }
                 double spII = second_invariant2(sp);
 
@@ -734,8 +767,5 @@ void update_stress(const Variables& var, tensor_t& stress, double_vec& stressyy,
             std::exit(1);
             break;
         }
-        // std::cerr << "stress " << e << ": ";
-        // print(std::cerr, s, NSTR);
-        // std::cerr << '\n';
     }
 }

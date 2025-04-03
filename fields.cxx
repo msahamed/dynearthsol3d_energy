@@ -386,7 +386,7 @@ static void apply_damping(const Param& param, const Variables& var, array_t& for
     const double* v = var.vel->data();
     const double small_vel = 1e-13;
     #pragma omp parallel for default(none)          \
-        shared(var, param, ff, v)
+        shared(var, param, ff, v, small_vel)
     for (int i=0; i<var.nnode*NDIMS; ++i) {
         if (std::fabs(v[i]) > small_vel) {
             ff[i] -= param.control.damping_factor * std::copysign(ff[i], v[i]);

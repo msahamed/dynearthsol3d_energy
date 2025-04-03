@@ -18,14 +18,30 @@ typedef Array2D<double,NODES_PER_ELEM> brc_t;
 void interpolate_field(const brc_t &brc, const int_vec &el, const conn_t &connectivity,
                        const double_vec &source, double_vec &target)
 {
+    const size_t target_size = target.size();
+    const size_t chunk_size = 64; // Cache-friendly chunk size
+    
     #pragma omp parallel for default(none)          \
-        shared(brc, el, connectivity, source, target)
-    for (std::size_t i=0; i<target.size(); i++) {
+        shared(brc, el, connectivity, source, target, target_size, chunk_size) \
+        schedule(static, chunk_size)
+    for (std::size_t i=0; i<target_size; i++) {
         int e = el[i];
         const int *conn = connectivity[e];
+        const double *brc_row = brc[i];
+        
+        // Prefetch next iteration's data
+        if (i < target_size - 1) {
+            const int next_e = el[i+1];
+            const double *next_source = &source[next_e];
+            const double *next_brc = brc[i+1];
+            __builtin_prefetch(next_source, 0, 3);
+            __builtin_prefetch(next_brc, 0, 3);
+        }
+        
         double result = 0;
+        #pragma omp simd reduction(+:result)
         for (int j=0; j<NODES_PER_ELEM; j++) {
-            result += source[conn[j]] * brc[i][j];
+            result += source[conn[j]] * brc_row[j];
         }
         target[i] = result;
     }
@@ -35,17 +51,34 @@ void interpolate_field(const brc_t &brc, const int_vec &el, const conn_t &connec
 void interpolate_field(const brc_t &brc, const int_vec &el, const conn_t &connectivity,
                        const array_t &source, array_t &target)
 {
+    const size_t target_size = target.size();
+    const size_t chunk_size = 64; // Cache-friendly chunk size
+    
     #pragma omp parallel for default(none)          \
-        shared(brc, el, connectivity, source, target)
-    for (std::size_t i=0; i<target.size(); i++) {
+        shared(brc, el, connectivity, source, target, target_size, chunk_size) \
+        schedule(static, chunk_size)
+    for (std::size_t i=0; i<target_size; i++) {
         int e = el[i];
         const int *conn = connectivity[e];
+        const double *brc_row = brc[i];
+        double *target_row = target[i];
+        
+        // Prefetch next iteration's data
+        if (i < target_size - 1) {
+            const int next_e = el[i+1];
+            const double *next_source = source[next_e];
+            const double *next_brc = brc[i+1];
+            __builtin_prefetch(next_source, 0, 3);
+            __builtin_prefetch(next_brc, 0, 3);
+        }
+        
+        // Compute interpolation for all dimensions
+        #pragma omp simd
         for (int d=0; d<NDIMS; d++) {
-            double result = 0;
+            target_row[d] = 0;
             for (int j=0; j<NODES_PER_ELEM; j++) {
-                result += source[conn[j]][d] * brc[i][j];
+                target_row[d] += source[conn[j]][d] * brc_row[j];
             }
-            target[i][d] = result;
         }
     }
 }
