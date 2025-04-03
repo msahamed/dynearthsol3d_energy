@@ -1,0 +1,8 @@
+--sim.modelname=test_timestamped
+--sim.max_steps=10
+--mesh.meshing_option=90
+--mesh.poly_filename=../examples/rifting-2d.poly
+--mesh.xlength=100000
+--mesh.zlength=50000
+--mesh.resolution=5000
+--mat.rheology_type=elasto-visco-plastic
