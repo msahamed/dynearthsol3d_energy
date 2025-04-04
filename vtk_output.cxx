@@ -101,7 +101,7 @@ void setup_output_directories(const std::string& modelname) {
     create_directory(vtk_subdir);
     create_directory(viz_subdir);
     
-    std::cout << "  Created output directories for model: " << modelname << " (timestamp: " << run_timestamp << ")" << std::endl;
+    // std::cout << "  Created output directories for model: " << modelname << " (timestamp: " << run_timestamp << ")" << std::endl;
 }
 
 void write_vtk_file(const Variables& var, int frame, double dt, const std::string& modelname) {
@@ -246,7 +246,7 @@ void write_vtk_file(const Variables& var, int frame, double dt, const std::strin
     
     vtk_file.close();
     
-    std::cout << "  Wrote VTK file: " << filename.str() << "\n";
+    // std::cout << "  Wrote VTK file: " << filename.str() << "\n";
 }
 
 } // namespace vtk_output
