@@ -73,57 +73,57 @@ include 3x3-C/CMakeFiles/3x3.dir/flags.make
 3x3-C/CMakeFiles/3x3.dir/dsytrd3.c.o: 3x3-C/dsytrd3.c
 3x3-C/CMakeFiles/3x3.dir/dsytrd3.c.o: 3x3-C/CMakeFiles/3x3.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object 3x3-C/CMakeFiles/3x3.dir/dsytrd3.c.o"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -MD -MT 3x3-C/CMakeFiles/3x3.dir/dsytrd3.c.o -MF CMakeFiles/3x3.dir/dsytrd3.c.o.d -o CMakeFiles/3x3.dir/dsytrd3.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsytrd3.c
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -MD -MT 3x3-C/CMakeFiles/3x3.dir/dsytrd3.c.o -MF CMakeFiles/3x3.dir/dsytrd3.c.o.d -o CMakeFiles/3x3.dir/dsytrd3.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsytrd3.c
 
 3x3-C/CMakeFiles/3x3.dir/dsytrd3.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/3x3.dir/dsytrd3.c.i"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -E /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsytrd3.c > CMakeFiles/3x3.dir/dsytrd3.c.i
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -E /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsytrd3.c > CMakeFiles/3x3.dir/dsytrd3.c.i
 
 3x3-C/CMakeFiles/3x3.dir/dsytrd3.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/3x3.dir/dsytrd3.c.s"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -S /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsytrd3.c -o CMakeFiles/3x3.dir/dsytrd3.c.s
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -S /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsytrd3.c -o CMakeFiles/3x3.dir/dsytrd3.c.s
 
 3x3-C/CMakeFiles/3x3.dir/dsyevc3.c.o: 3x3-C/CMakeFiles/3x3.dir/flags.make
 3x3-C/CMakeFiles/3x3.dir/dsyevc3.c.o: 3x3-C/dsyevc3.c
 3x3-C/CMakeFiles/3x3.dir/dsyevc3.c.o: 3x3-C/CMakeFiles/3x3.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object 3x3-C/CMakeFiles/3x3.dir/dsyevc3.c.o"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -MD -MT 3x3-C/CMakeFiles/3x3.dir/dsyevc3.c.o -MF CMakeFiles/3x3.dir/dsyevc3.c.o.d -o CMakeFiles/3x3.dir/dsyevc3.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevc3.c
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -MD -MT 3x3-C/CMakeFiles/3x3.dir/dsyevc3.c.o -MF CMakeFiles/3x3.dir/dsyevc3.c.o.d -o CMakeFiles/3x3.dir/dsyevc3.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevc3.c
 
 3x3-C/CMakeFiles/3x3.dir/dsyevc3.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/3x3.dir/dsyevc3.c.i"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -E /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevc3.c > CMakeFiles/3x3.dir/dsyevc3.c.i
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -E /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevc3.c > CMakeFiles/3x3.dir/dsyevc3.c.i
 
 3x3-C/CMakeFiles/3x3.dir/dsyevc3.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/3x3.dir/dsyevc3.c.s"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -S /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevc3.c -o CMakeFiles/3x3.dir/dsyevc3.c.s
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -S /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevc3.c -o CMakeFiles/3x3.dir/dsyevc3.c.s
 
 3x3-C/CMakeFiles/3x3.dir/dsyevq3.c.o: 3x3-C/CMakeFiles/3x3.dir/flags.make
 3x3-C/CMakeFiles/3x3.dir/dsyevq3.c.o: 3x3-C/dsyevq3.c
 3x3-C/CMakeFiles/3x3.dir/dsyevq3.c.o: 3x3-C/CMakeFiles/3x3.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object 3x3-C/CMakeFiles/3x3.dir/dsyevq3.c.o"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -MD -MT 3x3-C/CMakeFiles/3x3.dir/dsyevq3.c.o -MF CMakeFiles/3x3.dir/dsyevq3.c.o.d -o CMakeFiles/3x3.dir/dsyevq3.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevq3.c
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -MD -MT 3x3-C/CMakeFiles/3x3.dir/dsyevq3.c.o -MF CMakeFiles/3x3.dir/dsyevq3.c.o.d -o CMakeFiles/3x3.dir/dsyevq3.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevq3.c
 
 3x3-C/CMakeFiles/3x3.dir/dsyevq3.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/3x3.dir/dsyevq3.c.i"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -E /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevq3.c > CMakeFiles/3x3.dir/dsyevq3.c.i
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -E /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevq3.c > CMakeFiles/3x3.dir/dsyevq3.c.i
 
 3x3-C/CMakeFiles/3x3.dir/dsyevq3.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/3x3.dir/dsyevq3.c.s"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -S /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevq3.c -o CMakeFiles/3x3.dir/dsyevq3.c.s
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -S /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevq3.c -o CMakeFiles/3x3.dir/dsyevq3.c.s
 
 3x3-C/CMakeFiles/3x3.dir/dsyevh3.c.o: 3x3-C/CMakeFiles/3x3.dir/flags.make
 3x3-C/CMakeFiles/3x3.dir/dsyevh3.c.o: 3x3-C/dsyevh3.c
 3x3-C/CMakeFiles/3x3.dir/dsyevh3.c.o: 3x3-C/CMakeFiles/3x3.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object 3x3-C/CMakeFiles/3x3.dir/dsyevh3.c.o"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -MD -MT 3x3-C/CMakeFiles/3x3.dir/dsyevh3.c.o -MF CMakeFiles/3x3.dir/dsyevh3.c.o.d -o CMakeFiles/3x3.dir/dsyevh3.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevh3.c
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -MD -MT 3x3-C/CMakeFiles/3x3.dir/dsyevh3.c.o -MF CMakeFiles/3x3.dir/dsyevh3.c.o.d -o CMakeFiles/3x3.dir/dsyevh3.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevh3.c
 
 3x3-C/CMakeFiles/3x3.dir/dsyevh3.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/3x3.dir/dsyevh3.c.i"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -E /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevh3.c > CMakeFiles/3x3.dir/dsyevh3.c.i
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -E /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevh3.c > CMakeFiles/3x3.dir/dsyevh3.c.i
 
 3x3-C/CMakeFiles/3x3.dir/dsyevh3.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/3x3.dir/dsyevh3.c.s"
-	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -S /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevh3.c -o CMakeFiles/3x3.dir/dsyevh3.c.s
+	cd /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C && /Library/Developer/CommandLineTools/usr/bin/clang $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -Wall -O3 -ffast-math -S /Users/sabberahamed/Documents/dynearthsol3d_energy/3x3-C/dsyevh3.c -o CMakeFiles/3x3.dir/dsyevh3.c.s
 
 # Object files for target 3x3
 3x3_OBJECTS = \

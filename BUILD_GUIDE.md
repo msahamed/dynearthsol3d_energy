@@ -1,99 +1,112 @@
-# DynEarthSol End-to-End Usage Guide
+# DynEarthSol Build and Usage Guide
 
-This guide demonstrates the complete process of running a simulation with DynEarthSol3D, from configuration to visualization.
+This guide demonstrates how to build DynEarthSol from scratch and run simulations using the example configuration files.
 
-## 1. Setting Up Configuration
+## 1. Building DynEarthSol From Scratch
 
-First, create a configuration file (`.cfg`) that defines your simulation parameters. Here's an example of a 2D shear zone model:
+DynEarthSol uses CMake as its build system, which makes it easy to compile on different platforms. Follow these steps to build the code from scratch:
 
-```
-# 2D Shear Zone Model Configuration
-# This simulates strike-slip faulting in a simple box
+### Prerequisites
 
-# Simulation parameters
-sim.modelname = shear_zone_2d
-sim.max_steps = 100
-sim.output_step_interval = 10
-sim.output_averaged_fields = 0
-sim.max_time_in_yr = 1e5  # 100,000 years
+Make sure you have the following dependencies installed:
 
-# Mesh parameters
-mesh.meshing_option = 1
-mesh.xlength = 50e3      # 50 km width
-mesh.ylength = 1e3       # 1 km thickness (required for 2D)
-mesh.zlength = 20e3      # 20 km depth
-mesh.resolution = 1e3    # 1 km resolution
-mesh.min_angle = 30
+- C++ compiler (GCC 7+ or Clang 10+)
+- CMake (version 3.14+)
+- Boost libraries (specifically boost_program_options)
+- Python 3 with NumPy (for visualization)
+- Optional: VTK libraries (for mesh adaptation)
 
-# Material properties - elasto-plastic rheology
-mat.rheology_type = elasto-plastic
-mat.num_materials = 1
-mat.rho0 = [2800]                   # Density (kg/m³)
-mat.thermal_coefficient = [3e-5]    # Thermal expansion coefficient (1/K)
-mat.bulk_modulus = [50e9]           # Bulk modulus (Pa)
-mat.shear_modulus = [30e9]          # Shear modulus (Pa)
-mat.pls0 = [0]                      # Plastic strain start
-mat.pls1 = [0.1]                    # Plastic strain saturation
-mat.cohesion0 = [2e7]               # Initial cohesion (Pa)
-mat.cohesion1 = [1e6]               # Weakened cohesion (Pa)
-mat.friction_angle0 = [30]          # Initial friction angle (degrees)
-mat.friction_angle1 = [5]           # Weakened friction angle (degrees)
+### Step-by-Step Build Process
 
-# Initial conditions - a central weak zone to localize deformation
-ic.weakzone_option = 1
-ic.weakzone_plstrain = 0.05
-ic.weakzone_inclination = 90        # Vertical weak zone
-ic.weakzone_halfwidth = 3           # Width in mesh resolution units
-ic.weakzone_xcenter = 0.5           # Center of model
-ic.weakzone_depth_min = 0           # From surface
-ic.weakzone_depth_max = 1.0         # To bottom
+1. **Clone the repository** (if you haven't already):
+   ```bash
+   git clone https://github.com/your-username/dynearthsol3d_energy.git
+   cd dynearthsol3d_energy
+   ```
 
-# Control parameters
-control.gravity = 9.81              # m/s²
-control.is_quasi_static = true
-control.dt_fraction = 0.5           # Reduced time step for stability
+2. **Use the build script** (recommended for most users):
+   ```bash
+   # For 2D simulation (default)
+   ./build.sh
 
-# Boundary conditions - strike-slip (y-direction velocity in a 2D x-z model)
-bc.vbc_x0 = 2                       # Left boundary: fix shear, free normal
-bc.vbc_x1 = 2                       # Right boundary: fix shear, free normal
-bc.vbc_val_x0 = 5e-9                # 5 cm/yr right-lateral (into the plane)
-bc.vbc_val_x1 = -5e-9               # 5 cm/yr right-lateral (out of the plane)
-bc.vbc_z0 = 3                       # Fix bottom boundary (both normal and shear)
-bc.vbc_z1 = 0                       # Free top boundary
-bc.vbc_val_z0 = 0                   # No motion at bottom
+   # For 3D simulation
+   ./build.sh --3d
 
-# Thermal conditions
-ic.temperature_option = 0           # Half-space cooling
-bc.surface_temperature = 273        # Surface at 0°C
-bc.mantle_temperature = 600         # Bottom at 327°C (shallow model)
-```
+   # For debug build
+   ./build.sh --debug
 
-Save this file in the `examples` directory as `shear_zone_2d.cfg`.
+   # For build with OpenMP parallelization (on by default)
+   ./build.sh --openmp
 
-## 2. Building the Code
+   # For build without OpenMP
+   ./build.sh --no-openmp
 
-Navigate to the build directory and compile the code:
+   # For build with mesh adaptation (requires VTK)
+   ./build.sh --adapt
+
+   # To clean before building
+   ./build.sh --clean
+   ```
+
+3. **Manual build** (alternative approach):
+   ```bash
+   # Create and enter build directory
+   mkdir -p build
+   cd build
+
+   # Configure with CMake
+   cmake .. -DWITH_3D=OFF -DWITH_OPENMP=ON -DWITH_ADAPT=OFF -DWITH_DEBUG=OFF
+
+   # Build with multiple cores
+   make -j$(nproc)  # On Linux
+   # or
+   make -j$(sysctl -n hw.ncpu)  # On macOS
+   ```
+
+4. **Verify the build**:
+   After successful compilation, you should have the executable in the `bin` directory:
+   ```bash
+   # For 2D build
+   ls -l bin/dynearthsol2d
+
+   # For 3D build
+   ls -l bin/dynearthsol3d
+   ```
+
+## 2. Running a Simulation Using Example Configurations
+
+DynEarthSol comes with several example configuration files in the `examples` directory. These are ready-to-use setups for different geological scenarios.
+
+### Available Example Configurations
+
+Here are the key example configurations you can use:
+
+1. **`simple_test.cfg`**: Basic 2D simulation for testing
+2. **`shear_zone_2d.cfg`**: Strike-slip fault simulation
+3. **`extension_model.cfg`**: Continental extension/rifting simulation
+4. **`subduction_model.cfg`**: Subduction zone simulation
+5. **`thermal_convection.cfg`**: Thermal convection test
+6. **`simple_3d_model.cfg`**: Simple 3D simulation example
+
+### Running a Simulation with an Example Configuration
+
+To run a simulation using one of the example configurations:
 
 ```bash
-cd /path/to/dynearthsol3d_energy/build
-make
+# Go to the project root directory
+cd /path/to/dynearthsol3d_energy
+
+# For 2D simulation
+./bin/dynearthsol2d examples/shear_zone_2d.cfg
+
+# For 3D simulation
+./bin/dynearthsol3d examples/simple_3d_model.cfg
 ```
 
-This will build the necessary executables, including `dynearthsol2d` for 2D simulations and `dynearthsol3d` for 3D simulations.
-
-## 3. Running the Simulation
-
-Run the simulation using the configuration file:
-
-```bash
-cd /path/to/dynearthsol3d_energy/build
-./bin/dynearthsol2d ../examples/shear_zone_2d.cfg
-```
-
-The simulation will run and produce output like this:
+The simulation will start and create a timestamped output directory based on the model name specified in the configuration file. You'll see output like this:
 
 ```
-Checking consisitency of input parameters...
+Checking consistency of input parameters...
 Initializing mesh and field data...
   Created directory: /path/to/dynearthsol3d_energy/output/shear_zone_2d_YYYYMMDD_HHMMSS
   Created directory: /path/to/dynearthsol3d_energy/output/shear_zone_2d_YYYYMMDD_HHMMSS/runs
@@ -108,9 +121,70 @@ Starting simulation...
 Ending simulation.
 ```
 
-## 4. Output File Structure
+### Using a Custom Configuration
 
-The simulation creates a timestamped output directory with the following structure:
+You can also create a new configuration file by modifying an existing example:
+
+```bash
+# Copy an example config to modify
+cp examples/shear_zone_2d.cfg my_custom_model.cfg
+
+# Edit the configuration file
+nano my_custom_model.cfg  # or use your preferred text editor
+
+# Run with your custom configuration
+./bin/dynearthsol2d my_custom_model.cfg
+```
+
+Make sure to change the `sim.modelname` parameter in your custom configuration to give your simulation a unique name.
+
+## 3. Full End-to-End Workflow Example
+
+Here's a complete workflow example, from building to visualization:
+
+```bash
+# 1. Clean build from scratch
+./build.sh --clean
+
+# 2. Run a simulation with an example config
+./bin/dynearthsol2d examples/shear_zone_2d.cfg
+
+# 3. Find the output directory (will have a timestamp)
+latest_output=$(find output -name "shear_zone_2d_*" -type d | sort | tail -n 1)
+echo "Latest output: $latest_output"
+
+# 4. Convert output to VTK format if needed (typically done automatically)
+python 2vtk.py $latest_output/runs/shear_zone_2d.save.* $latest_output/vtk/
+
+# 5. Visualize using a simple Python script
+python utils/plot_domain.py shear_zone_2d
+```
+
+## 4. Customizing Build Parameters
+
+DynEarthSol build parameters can be customized to fit your needs:
+
+| Parameter | Options | Description |
+|-----------|---------|-------------|
+| WITH_3D | ON/OFF | Build for 3D simulations (default: OFF) |
+| WITH_OPENMP | ON/OFF | Enable OpenMP parallelization (default: ON) |
+| WITH_ADAPT | ON/OFF | Enable mesh adaptation (requires VTK, default: OFF) |
+| WITH_DEBUG | ON/OFF | Build with debug symbols (default: OFF) |
+
+You can set these parameters either using the `build.sh` script or directly with CMake:
+
+```bash
+# Using build.sh
+./build.sh --3d --no-openmp --debug
+
+# Using CMake directly
+cmake -B build -S . -DWITH_3D=ON -DWITH_OPENMP=OFF -DWITH_DEBUG=ON
+cmake --build build -- -j$(nproc)
+```
+
+## 5. Output File Structure
+
+Each simulation creates a timestamped output directory with the following structure:
 
 ```
 output/
@@ -128,300 +202,174 @@ output/
         └── shear_zone_2d_time_series.png
 ```
 
-## 5. Basic Visualization
+## 6. Example Configuration: Understanding Key Parameters
 
-You can use the provided plotting script to visualize the simulation results:
+Let's examine the key parameters in the example configuration files:
+
+### Basic Simulation Parameters
+
+```
+# Simulation parameters
+sim.modelname = shear_zone_2d    # Name of model (used for output files)
+sim.max_steps = 100              # Maximum number of time steps
+sim.output_step_interval = 10    # Save output every X steps
+sim.max_time_in_yr = 1e5         # Maximum simulation time in years
+```
+
+### Mesh Parameters
+
+```
+# Mesh parameters
+mesh.meshing_option = 1          # Mesh generation method (1 = box mesh)
+mesh.xlength = 50e3              # Width of model domain in meters
+mesh.ylength = 1e3               # Thickness (required for 2D) in meters
+mesh.zlength = 20e3              # Depth of model domain in meters
+mesh.resolution = 1e3            # Base resolution in meters
+```
+
+### Material Properties
+
+```
+# Material properties
+mat.rheology_type = elasto-plastic   # Rheology model
+mat.num_materials = 1                # Number of materials in model
+mat.rho0 = [2800]                    # Density (kg/m³)
+mat.bulk_modulus = [50e9]            # Bulk modulus (Pa)
+mat.shear_modulus = [30e9]           # Shear modulus (Pa)
+```
+
+### Boundary Conditions
+
+```
+# Boundary conditions (example: strike-slip)
+bc.vbc_x0 = 2                        # Left boundary condition type
+bc.vbc_x1 = 2                        # Right boundary condition type
+bc.vbc_val_x0 = 5e-9                 # Left boundary velocity (m/s)
+bc.vbc_val_x1 = -5e-9                # Right boundary velocity (m/s)
+bc.vbc_z0 = 3                        # Bottom boundary condition type
+bc.vbc_z1 = 0                        # Top boundary condition type
+```
+
+For a complete parameter reference, see the `CONFIG_GUIDE.md` document.
+
+## 7. Visualization Options
+
+DynEarthSol outputs can be visualized in several ways:
+
+### Basic Visualization with Included Scripts
 
 ```bash
-cd /path/to/dynearthsol3d_energy/build
-python bin/plot_domain.py shear_zone_2d
+# Plot domain overview
+python utils/plot_domain.py shear_zone_2d
+
+# Animate simulation progression
+python utils/animate_simulation.py shear_zone_2d
 ```
 
-This generates two types of plots:
-1. A frame plot showing the simulation domain at the latest frame
-2. A time series plot showing the progression of simulation time vs. step
+### Advanced Visualization with ParaView
 
-These plots are saved in the `viz/` directory with filenames like:
-- `shear_zone_2d_frame_10.png`
-- `shear_zone_2d_time_series.png`
-
-## 6. Customized Visualization
-
-For more specific visualizations, you can create custom scripts that read the VTK files. Here's an example script to visualize specific fields from the VTK output:
-
-```python
-#!/usr/bin/env python
-"""
-Script to plot fields from DynEarthSol VTK files
-"""
-import sys
-import os
-import numpy as np
-import vtk
-from vtk.util.numpy_support import vtk_to_numpy
-import matplotlib.pyplot as plt
-import matplotlib.tri as tri
-
-def get_output_root():
-    """Get the absolute path to the output directory"""
-    project_root = '/path/to/dynearthsol3d_energy'
-    return os.path.join(project_root, 'output')
-
-def find_latest_run(model_name):
-    """Find the latest run directory for a given model name"""
-    output_root = get_output_root()
-    matching_dirs = []
-    for item in os.listdir(output_root):
-        if item.startswith(model_name + "_") and os.path.isdir(os.path.join(output_root, item)):
-            matching_dirs.append(item)
-    
-    if not matching_dirs:
-        return None
-    
-    matching_dirs.sort(reverse=True)
-    return os.path.join(output_root, matching_dirs[0])
-
-def read_vtk_file(filename):
-    """Read VTK file and extract data"""
-    reader = vtk.vtkUnstructuredGridReader()
-    reader.SetFileName(filename)
-    reader.Update()
-    
-    data = reader.GetOutput()
-    
-    # Extract coordinates
-    points = data.GetPoints()
-    vertices = vtk_to_numpy(points.GetData())
-    
-    # Extract connectivity
-    cells = data.GetCells()
-    connectivity = []
-    for i in range(data.GetNumberOfCells()):
-        cell = data.GetCell(i)
-        if cell.GetNumberOfPoints() == 3:  # Triangle cell
-            connectivity.append([cell.GetPointId(0), cell.GetPointId(1), cell.GetPointId(2)])
-    
-    # Extract scalar data
-    scalar_data = {}
-    point_data = data.GetPointData()
-    for i in range(point_data.GetNumberOfArrays()):
-        name = point_data.GetArrayName(i)
-        array = point_data.GetArray(i)
-        scalar_data[name] = vtk_to_numpy(array)
-    
-    return {
-        'coordinates': vertices,
-        'connectivity': np.array(connectivity),
-        'scalar_data': scalar_data
-    }
-
-def plot_scalar_field(data, field_name, output_path=None):
-    """Plot a scalar field from the VTK data"""
-    coords = data['coordinates']
-    
-    # For 2D, use only x and z components
-    x = coords[:, 0]
-    z = coords[:, 2] if coords.shape[1] > 2 else coords[:, 1]
-    
-    # Create triangulation
-    triang = tri.Triangulation(x, z, data['connectivity'])
-    
-    # Get the scalar field data
-    if field_name in data['scalar_data']:
-        scalar_field = data['scalar_data'][field_name]
-    else:
-        print(f"Field '{field_name}' not found. Available fields: {list(data['scalar_data'].keys())}")
-        return
-    
-    # Create figure
-    fig, ax = plt.subplots(figsize=(12, 8))
-    
-    # Plot triangulation with scalar field
-    tpc = ax.tripcolor(triang, scalar_field, cmap='viridis')
-    
-    # Add colorbar
-    cbar = plt.colorbar(tpc, ax=ax)
-    cbar.set_label(field_name)
-    
-    # Set labels and title
-    ax.set_xlabel('X (m)')
-    ax.set_ylabel('Z (m)')
-    ax.set_title(f"DynEarthSol Simulation - {field_name.replace('_', ' ').title()}")
-    
-    # Equal aspect ratio
-    ax.set_aspect('equal')
-    
-    # Save figure if output path provided
-    if output_path:
-        plt.savefig(output_path, dpi=150, bbox_inches='tight')
-        print(f"Plot saved to {output_path}")
-    else:
-        plt.show()
-    
-    plt.close()
-
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python plot_fields.py <model_name> [frame_number] [field_name]")
-        sys.exit(1)
-    
-    model_name = sys.argv[1]
-    frame_number = int(sys.argv[2]) if len(sys.argv) > 2 else 10  # Default to frame 10
-    field_name = sys.argv[3] if len(sys.argv) > 3 else 'temperature'  # Default to temperature
-    
-    # Find the latest run directory
-    run_dir = find_latest_run(model_name)
-    if not run_dir:
-        print(f"No run directory found for model: {model_name}")
-        sys.exit(1)
-    
-    # Find VTK file for the requested frame
-    vtk_dir = os.path.join(run_dir, 'vtk')
-    vtk_filename = os.path.join(vtk_dir, f"{model_name}_{frame_number:06d}.vtk")
-    
-    if not os.path.exists(vtk_filename):
-        print(f"VTK file not found: {vtk_filename}")
-        sys.exit(1)
-    
-    # Read VTK file
-    data = read_vtk_file(vtk_filename)
-    
-    # Create output directory for custom plots
-    viz_dir = os.path.join(run_dir, 'viz')
-    os.makedirs(viz_dir, exist_ok=True)
-    
-    # Plot the scalar field
-    output_path = os.path.join(viz_dir, f"{model_name}_{field_name}_frame_{frame_number:02d}.png")
-    plot_scalar_field(data, field_name, output_path)
-```
-
-Run this script to visualize specific fields from the simulation:
-
-```bash
-python plot_fields.py shear_zone_2d 10 temperature
-python plot_fields.py shear_zone_2d 10 strain_rate
-```
-
-## 7. Working with VTK Files Directly
-
-You can inspect VTK files to understand what data is available:
-
-```bash
-# Create a simple script to inspect VTK files
-cat > inspect_vtk.py << 'EOF'
-#!/usr/bin/env python
-import sys
-import os
-
-def read_vtk_header(filename):
-    """Read and display information about a VTK file"""
-    info = {}
-    with open(filename, 'r') as f:
-        lines = f.readlines()
-        
-        # Extract header information
-        info['version'] = lines[0].strip()
-        info['title'] = lines[1].strip()
-        info['format'] = lines[2].strip()
-        info['dataset'] = lines[3].strip()
-        
-        # Find POINTS line
-        for i, line in enumerate(lines):
-            if line.startswith('POINTS'):
-                parts = line.strip().split()
-                info['num_points'] = int(parts[1])
-                break
-                
-        # Find CELLS line
-        for i, line in enumerate(lines):
-            if line.startswith('CELLS'):
-                parts = line.strip().split()
-                info['num_cells'] = int(parts[1])
-                break
-                
-        # Find scalar data
-        scalar_fields = []
-        for i, line in enumerate(lines):
-            if line.startswith('SCALARS'):
-                parts = line.strip().split()
-                scalar_fields.append(parts[1])
-        
-        info['scalar_fields'] = scalar_fields
-        
-    return info
-
-if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python inspect_vtk.py <vtk_file>")
-        sys.exit(1)
-        
-    filename = sys.argv[1]
-    if not os.path.exists(filename):
-        print(f"Error: File {filename} not found.")
-        sys.exit(1)
-        
-    info = read_vtk_header(filename)
-    
-    print(f"VTK File Information: {os.path.basename(filename)}")
-    print(f"Version: {info['version']}")
-    print(f"Title: {info['title']}")
-    print(f"Format: {info['format']}")
-    print(f"Dataset: {info['dataset']}")
-    print(f"Number of Points: {info['num_points']}")
-    print(f"Number of Cells: {info['num_cells']}")
-    print("Scalar Fields:", ", ".join(info['scalar_fields']))
-EOF
-
-# Run the script on a VTK file
-python inspect_vtk.py /path/to/dynearthsol3d_energy/output/shear_zone_2d_YYYYMMDD_HHMMSS/vtk/shear_zone_2d_000010.vtk
-```
-
-This will show you information about the VTK file and the available data fields:
-
-```
-VTK File Information: shear_zone_2d_000010.vtk
-Version: # vtk DataFile Version 3.0
-Title: DynEarthSol output, frame 10, time 26.4073 years
-Format: ASCII
-Dataset: DATASET UNSTRUCTURED_GRID
-Number of Points: 583
-Number of Cells: 1077
-Scalar Fields: temperature, velocity, strain_rate, stress
-```
-
-## 8. Advanced Visualization
-
-For more advanced visualization, you can use tools like ParaView to load and analyze the VTK files. ParaView provides a graphical interface for interactive visualization and analysis of scientific data.
+For more detailed visualization:
 
 1. Install ParaView from [https://www.paraview.org/download/](https://www.paraview.org/download/)
-2. Launch ParaView and open a VTK file:
-   - File → Open → Navigate to the vtk directory and select a file
-   - Click "Apply" to load the data
-3. Visualize different fields:
-   - Select a field from the dropdown in the Properties panel
-   - Apply color maps, filters, and other visualization techniques
+2. Open the VTK files in ParaView:
+   ```bash
+   # Find VTK files
+   find output -name "*.vtk"
+   
+   # Launch ParaView (varies by platform)
+   paraview &
+   ```
+3. In ParaView: File → Open → Navigate to VTK files and select them
 
-## 9. Running Multiple Simulations
+## 8. Troubleshooting Common Build Issues
 
-One of the key features of DynEarthSol3D is the ability to run multiple simulations without overwriting previous results. Each simulation creates a unique timestamped directory:
+If you encounter build problems, try these solutions:
 
+- **Missing Boost libraries**: Install boost-program-options package for your system
+  ```bash
+  # Ubuntu/Debian
+  sudo apt install libboost-program-options-dev
+  
+  # macOS
+  brew install boost
+  ```
+
+- **Compilation errors**: Make sure your compiler supports C++17
+  ```bash
+  # Check GCC version
+  g++ --version  # Should be 7.0 or higher
+  
+  # Check Clang version
+  clang++ --version  # Should be 10.0 or higher
+  ```
+
+- **Build directory issues**: Try cleaning and rebuilding
+  ```bash
+  ./build.sh --clean
+  ```
+
+- **CMake configuration errors**: Make sure CMake is recent enough
+  ```bash
+  cmake --version  # Should be 3.14 or higher
+  ```
+
+## 9. Running Multiple Simulations for Parameter Studies
+
+For parameter studies, create multiple configuration files with variations and run them sequentially:
+
+```bash
+# Create a script to run multiple simulations
+cat > run_parameter_study.sh << 'EOF'
+#!/bin/bash
+
+# Array of config files to run
+configs=(
+  "examples/shear_zone_2d.cfg"
+  "examples/extension_model.cfg"
+  "examples/thermal_convection.cfg"
+)
+
+# Run each simulation
+for config in "${configs[@]}"; do
+  echo "Running simulation with config: $config"
+  ./bin/dynearthsol2d "$config"
+  echo "Completed simulation with config: $config"
+  echo "--------------------------------------------"
+done
+
+echo "All simulations complete."
+EOF
+
+# Make the script executable
+chmod +x run_parameter_study.sh
+
+# Run the parameter study
+./run_parameter_study.sh
 ```
-output/
-├── shear_zone_2d_20250403_093651/  # First run
-├── shear_zone_2d_20250403_102543/  # Second run
-└── shear_zone_2d_20250403_115824/  # Third run
-```
-
-This allows you to easily compare results from different parameter sets or model configurations.
 
 ## 10. Next Steps
 
-Once you're comfortable with the basics, consider exploring:
+Once you're comfortable with the basics, consider:
 
-- Longer simulation runs with more time steps
-- Different model configurations (extension, compression, subduction)
-- 3D simulations using `dynearthsol3d`
-- Custom post-processing scripts for advanced analysis
-- Parameter studies by running multiple simulations with varying parameters
+- Creating custom configuration files for your specific research questions
+- Extending the code with new rheological models or boundary conditions
+- Developing custom post-processing and visualization scripts
+- Running larger, more complex 3D models
+- Performing parameter sensitivity analyses
 
 Refer to the `CONFIG_GUIDE.md` document for detailed information about all available configuration parameters.
+
+## 11. Modifying Source Code and Rebuilding
+
+If you modify the source code, rebuild the project:
+
+```bash
+# After making changes to source files
+./build.sh
+
+# Or to rebuild specific components
+cd build
+make dynearthsol2d
+```
+
+Remember to test your changes with simple configurations before running complex simulations.

@@ -292,21 +292,7 @@ void isostasy_adjustment(const Param &param, Variables &var)
 
 int main(int argc, const char* argv[])
 {
-    // Set number of threads for OpenMP
-    #ifdef _OPENMP
-        std::cout << "=== OpenMP IS ENABLED ===\n";
-        int max_threads = omp_get_max_threads();
-        std::cout << "=== Maximum available threads: " << max_threads << " ===\n";
-        // Explicitly set thread count to use all available cores
-        omp_set_num_threads(max_threads);
-    #else
-        std::cout << "=== OpenMP IS NOT ENABLED ===\n";
-    #endif
-
     double start_time = 0;
-#ifdef USE_OMP
-    start_time = omp_get_wtime();
-#endif
 
     //
     // read command line
@@ -402,24 +388,15 @@ int main(int argc, const char* argv[])
 
             if (next_regular_frame % param.sim.checkpoint_frame_interval == 0) {
                 // Start asynchronous checkpoint write
-                #ifdef USE_OMP
-                #pragma omp task default(none) shared(var, param, output)
-                #endif
                 {
                     output.write_checkpoint(param, var);
                 }
-                #ifdef USE_OMP
-                #pragma omp taskwait
-                #endif
             }
 
             // Regular output can be synchronous since it's less frequent
             output.write(var);
             next_regular_frame ++;
         }
-
-        // Add task synchronization point
-        #pragma omp taskwait
 
         if (var.steps % param.mesh.quality_check_step_interval == 0) {
             // Check mesh quality
@@ -428,7 +405,6 @@ int main(int argc, const char* argv[])
             
             // Early exit if mesh hasn't changed significantly
             double max_velocity = 0;
-            #pragma omp parallel for reduction(max:max_velocity)
             for (int i=0; i<var.nnode; i++) {
                 double vel_mag = 0;
                 for (int d=0; d<NDIMS; d++) {

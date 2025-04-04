@@ -27,9 +27,35 @@
 dynearthsol2d
 dynearthsol3d
 
+# CMake build files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+compile_commands.json
+CTestTestfile.cmake
+_deps/
+*.cbp
+*/CMakeFiles/
+*/cmake_install.cmake
+*/Makefile
+*/*.cmake
+*.o.d
+*/*/*.o.d
+*/*/flags.make
+*/*/link.txt
+*/*/build.make
+*/*/DependInfo.cmake
+*/*/depend.make
+*/*/cmake_clean.cmake
+*/*/compiler_depend.*
+*/*/*/compiler_depend.*
+*/*.tcl
+
 # Build directories
 build/
 cmake-build-*/
+bin/
 
 # Generated files
 *.vtk

@@ -73,15 +73,15 @@ CMakeFiles/triangle.dir/triangle/triangle.c.o: CMakeFiles/triangle.dir/flags.mak
 CMakeFiles/triangle.dir/triangle/triangle.c.o: triangle/triangle.c
 CMakeFiles/triangle.dir/triangle/triangle.c.o: CMakeFiles/triangle.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/triangle.dir/triangle/triangle.c.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -O1 -DTRILIBRARY -DREDUCED -DANSI_DECLARATORS -MD -MT CMakeFiles/triangle.dir/triangle/triangle.c.o -MF CMakeFiles/triangle.dir/triangle/triangle.c.o.d -o CMakeFiles/triangle.dir/triangle/triangle.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/triangle/triangle.c
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -O1 -DTRILIBRARY -DREDUCED -DANSI_DECLARATORS -MD -MT CMakeFiles/triangle.dir/triangle/triangle.c.o -MF CMakeFiles/triangle.dir/triangle/triangle.c.o.d -o CMakeFiles/triangle.dir/triangle/triangle.c.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/triangle/triangle.c
 
 CMakeFiles/triangle.dir/triangle/triangle.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/triangle.dir/triangle/triangle.c.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -O1 -DTRILIBRARY -DREDUCED -DANSI_DECLARATORS -E /Users/sabberahamed/Documents/dynearthsol3d_energy/triangle/triangle.c > CMakeFiles/triangle.dir/triangle/triangle.c.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -O1 -DTRILIBRARY -DREDUCED -DANSI_DECLARATORS -E /Users/sabberahamed/Documents/dynearthsol3d_energy/triangle/triangle.c > CMakeFiles/triangle.dir/triangle/triangle.c.i
 
 CMakeFiles/triangle.dir/triangle/triangle.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/triangle.dir/triangle/triangle.c.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -O1 -DTRILIBRARY -DREDUCED -DANSI_DECLARATORS -S /Users/sabberahamed/Documents/dynearthsol3d_energy/triangle/triangle.c -o CMakeFiles/triangle.dir/triangle/triangle.c.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -O1 -DTRILIBRARY -DREDUCED -DANSI_DECLARATORS -S /Users/sabberahamed/Documents/dynearthsol3d_energy/triangle/triangle.c -o CMakeFiles/triangle.dir/triangle/triangle.c.s
 
 # Object files for target triangle
 triangle_OBJECTS = \

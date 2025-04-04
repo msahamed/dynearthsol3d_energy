@@ -73,267 +73,267 @@ CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o: CMakeFiles/dynearthsol2d.dir/
 CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o: barycentric-fn.cxx
 CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o -MF CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/barycentric-fn.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o -MF CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/barycentric-fn.cxx
 
 CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/barycentric-fn.cxx > CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/barycentric-fn.cxx > CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/barycentric-fn.cxx -o CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/barycentric-fn.cxx -o CMakeFiles/dynearthsol2d.dir/barycentric-fn.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o: brc-interpolation.cxx
 CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o -MF CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/brc-interpolation.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o -MF CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/brc-interpolation.cxx
 
 CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/brc-interpolation.cxx > CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/brc-interpolation.cxx > CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/brc-interpolation.cxx -o CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/brc-interpolation.cxx -o CMakeFiles/dynearthsol2d.dir/brc-interpolation.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/bc.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/bc.cxx.o: bc.cxx
 CMakeFiles/dynearthsol2d.dir/bc.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/dynearthsol2d.dir/bc.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/bc.cxx.o -MF CMakeFiles/dynearthsol2d.dir/bc.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/bc.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/bc.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/bc.cxx.o -MF CMakeFiles/dynearthsol2d.dir/bc.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/bc.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/bc.cxx
 
 CMakeFiles/dynearthsol2d.dir/bc.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/bc.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/bc.cxx > CMakeFiles/dynearthsol2d.dir/bc.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/bc.cxx > CMakeFiles/dynearthsol2d.dir/bc.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/bc.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/bc.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/bc.cxx -o CMakeFiles/dynearthsol2d.dir/bc.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/bc.cxx -o CMakeFiles/dynearthsol2d.dir/bc.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o: binaryio.cxx
 CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o -MF CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/binaryio.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o -MF CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/binaryio.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/binaryio.cxx
 
 CMakeFiles/dynearthsol2d.dir/binaryio.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/binaryio.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/binaryio.cxx > CMakeFiles/dynearthsol2d.dir/binaryio.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/binaryio.cxx > CMakeFiles/dynearthsol2d.dir/binaryio.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/binaryio.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/binaryio.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/binaryio.cxx -o CMakeFiles/dynearthsol2d.dir/binaryio.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/binaryio.cxx -o CMakeFiles/dynearthsol2d.dir/binaryio.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o: dynearthsol.cxx
 CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o -MF CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/dynearthsol.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o -MF CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/dynearthsol.cxx
 
 CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/dynearthsol.cxx > CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/dynearthsol.cxx > CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/dynearthsol.cxx -o CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/dynearthsol.cxx -o CMakeFiles/dynearthsol2d.dir/dynearthsol.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/fields.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/fields.cxx.o: fields.cxx
 CMakeFiles/dynearthsol2d.dir/fields.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/dynearthsol2d.dir/fields.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/fields.cxx.o -MF CMakeFiles/dynearthsol2d.dir/fields.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/fields.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/fields.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/fields.cxx.o -MF CMakeFiles/dynearthsol2d.dir/fields.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/fields.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/fields.cxx
 
 CMakeFiles/dynearthsol2d.dir/fields.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/fields.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/fields.cxx > CMakeFiles/dynearthsol2d.dir/fields.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/fields.cxx > CMakeFiles/dynearthsol2d.dir/fields.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/fields.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/fields.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/fields.cxx -o CMakeFiles/dynearthsol2d.dir/fields.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/fields.cxx -o CMakeFiles/dynearthsol2d.dir/fields.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/geometry.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/geometry.cxx.o: geometry.cxx
 CMakeFiles/dynearthsol2d.dir/geometry.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/dynearthsol2d.dir/geometry.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/geometry.cxx.o -MF CMakeFiles/dynearthsol2d.dir/geometry.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/geometry.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/geometry.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/geometry.cxx.o -MF CMakeFiles/dynearthsol2d.dir/geometry.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/geometry.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/geometry.cxx
 
 CMakeFiles/dynearthsol2d.dir/geometry.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/geometry.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/geometry.cxx > CMakeFiles/dynearthsol2d.dir/geometry.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/geometry.cxx > CMakeFiles/dynearthsol2d.dir/geometry.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/geometry.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/geometry.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/geometry.cxx -o CMakeFiles/dynearthsol2d.dir/geometry.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/geometry.cxx -o CMakeFiles/dynearthsol2d.dir/geometry.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/ic.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/ic.cxx.o: ic.cxx
 CMakeFiles/dynearthsol2d.dir/ic.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/dynearthsol2d.dir/ic.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/ic.cxx.o -MF CMakeFiles/dynearthsol2d.dir/ic.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/ic.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/ic.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/ic.cxx.o -MF CMakeFiles/dynearthsol2d.dir/ic.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/ic.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/ic.cxx
 
 CMakeFiles/dynearthsol2d.dir/ic.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/ic.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/ic.cxx > CMakeFiles/dynearthsol2d.dir/ic.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/ic.cxx > CMakeFiles/dynearthsol2d.dir/ic.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/ic.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/ic.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/ic.cxx -o CMakeFiles/dynearthsol2d.dir/ic.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/ic.cxx -o CMakeFiles/dynearthsol2d.dir/ic.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o: ic-read-temp.cxx
 CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o -MF CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/ic-read-temp.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o -MF CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/ic-read-temp.cxx
 
 CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/ic-read-temp.cxx > CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/ic-read-temp.cxx > CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/ic-read-temp.cxx -o CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/ic-read-temp.cxx -o CMakeFiles/dynearthsol2d.dir/ic-read-temp.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/input.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/input.cxx.o: input.cxx
 CMakeFiles/dynearthsol2d.dir/input.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/dynearthsol2d.dir/input.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/input.cxx.o -MF CMakeFiles/dynearthsol2d.dir/input.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/input.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/input.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/input.cxx.o -MF CMakeFiles/dynearthsol2d.dir/input.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/input.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/input.cxx
 
 CMakeFiles/dynearthsol2d.dir/input.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/input.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/input.cxx > CMakeFiles/dynearthsol2d.dir/input.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/input.cxx > CMakeFiles/dynearthsol2d.dir/input.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/input.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/input.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/input.cxx -o CMakeFiles/dynearthsol2d.dir/input.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/input.cxx -o CMakeFiles/dynearthsol2d.dir/input.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/matprops.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/matprops.cxx.o: matprops.cxx
 CMakeFiles/dynearthsol2d.dir/matprops.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/dynearthsol2d.dir/matprops.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/matprops.cxx.o -MF CMakeFiles/dynearthsol2d.dir/matprops.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/matprops.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/matprops.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/matprops.cxx.o -MF CMakeFiles/dynearthsol2d.dir/matprops.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/matprops.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/matprops.cxx
 
 CMakeFiles/dynearthsol2d.dir/matprops.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/matprops.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/matprops.cxx > CMakeFiles/dynearthsol2d.dir/matprops.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/matprops.cxx > CMakeFiles/dynearthsol2d.dir/matprops.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/matprops.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/matprops.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/matprops.cxx -o CMakeFiles/dynearthsol2d.dir/matprops.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/matprops.cxx -o CMakeFiles/dynearthsol2d.dir/matprops.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/mesh.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/mesh.cxx.o: mesh.cxx
 CMakeFiles/dynearthsol2d.dir/mesh.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/dynearthsol2d.dir/mesh.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/mesh.cxx.o -MF CMakeFiles/dynearthsol2d.dir/mesh.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/mesh.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/mesh.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/mesh.cxx.o -MF CMakeFiles/dynearthsol2d.dir/mesh.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/mesh.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/mesh.cxx
 
 CMakeFiles/dynearthsol2d.dir/mesh.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/mesh.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/mesh.cxx > CMakeFiles/dynearthsol2d.dir/mesh.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/mesh.cxx > CMakeFiles/dynearthsol2d.dir/mesh.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/mesh.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/mesh.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/mesh.cxx -o CMakeFiles/dynearthsol2d.dir/mesh.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/mesh.cxx -o CMakeFiles/dynearthsol2d.dir/mesh.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o: nn-interpolation.cxx
 CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o -MF CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/nn-interpolation.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o -MF CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/nn-interpolation.cxx
 
 CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/nn-interpolation.cxx > CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/nn-interpolation.cxx > CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/nn-interpolation.cxx -o CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/nn-interpolation.cxx -o CMakeFiles/dynearthsol2d.dir/nn-interpolation.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/output.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/output.cxx.o: output.cxx
 CMakeFiles/dynearthsol2d.dir/output.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/dynearthsol2d.dir/output.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/output.cxx.o -MF CMakeFiles/dynearthsol2d.dir/output.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/output.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/output.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/output.cxx.o -MF CMakeFiles/dynearthsol2d.dir/output.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/output.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/output.cxx
 
 CMakeFiles/dynearthsol2d.dir/output.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/output.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/output.cxx > CMakeFiles/dynearthsol2d.dir/output.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/output.cxx > CMakeFiles/dynearthsol2d.dir/output.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/output.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/output.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/output.cxx -o CMakeFiles/dynearthsol2d.dir/output.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/output.cxx -o CMakeFiles/dynearthsol2d.dir/output.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o: phasechanges.cxx
 CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o -MF CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/phasechanges.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o -MF CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/phasechanges.cxx
 
 CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/phasechanges.cxx > CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/phasechanges.cxx > CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/phasechanges.cxx -o CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/phasechanges.cxx -o CMakeFiles/dynearthsol2d.dir/phasechanges.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/rheology.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/rheology.cxx.o: rheology.cxx
 CMakeFiles/dynearthsol2d.dir/rheology.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/dynearthsol2d.dir/rheology.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/rheology.cxx.o -MF CMakeFiles/dynearthsol2d.dir/rheology.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/rheology.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/rheology.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/rheology.cxx.o -MF CMakeFiles/dynearthsol2d.dir/rheology.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/rheology.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/rheology.cxx
 
 CMakeFiles/dynearthsol2d.dir/rheology.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/rheology.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/rheology.cxx > CMakeFiles/dynearthsol2d.dir/rheology.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/rheology.cxx > CMakeFiles/dynearthsol2d.dir/rheology.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/rheology.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/rheology.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/rheology.cxx -o CMakeFiles/dynearthsol2d.dir/rheology.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/rheology.cxx -o CMakeFiles/dynearthsol2d.dir/rheology.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/markerset.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/markerset.cxx.o: markerset.cxx
 CMakeFiles/dynearthsol2d.dir/markerset.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/dynearthsol2d.dir/markerset.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/markerset.cxx.o -MF CMakeFiles/dynearthsol2d.dir/markerset.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/markerset.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/markerset.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/markerset.cxx.o -MF CMakeFiles/dynearthsol2d.dir/markerset.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/markerset.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/markerset.cxx
 
 CMakeFiles/dynearthsol2d.dir/markerset.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/markerset.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/markerset.cxx > CMakeFiles/dynearthsol2d.dir/markerset.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/markerset.cxx > CMakeFiles/dynearthsol2d.dir/markerset.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/markerset.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/markerset.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/markerset.cxx -o CMakeFiles/dynearthsol2d.dir/markerset.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/markerset.cxx -o CMakeFiles/dynearthsol2d.dir/markerset.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o: vtk_output.cxx
 CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o -MF CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/vtk_output.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o -MF CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/vtk_output.cxx
 
 CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/vtk_output.cxx > CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/vtk_output.cxx > CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/vtk_output.cxx -o CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/vtk_output.cxx -o CMakeFiles/dynearthsol2d.dir/vtk_output.cxx.s
 
 CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o: CMakeFiles/dynearthsol2d.dir/flags.make
 CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o: remeshing.cxx
 CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o: CMakeFiles/dynearthsol2d.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/Users/sabberahamed/Documents/dynearthsol3d_energy/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o -MF CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/remeshing.cxx
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o -MF CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o.d -o CMakeFiles/dynearthsol2d.dir/remeshing.cxx.o -c /Users/sabberahamed/Documents/dynearthsol3d_energy/remeshing.cxx
 
 CMakeFiles/dynearthsol2d.dir/remeshing.cxx.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/dynearthsol2d.dir/remeshing.cxx.i"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/remeshing.cxx > CMakeFiles/dynearthsol2d.dir/remeshing.cxx.i
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/sabberahamed/Documents/dynearthsol3d_energy/remeshing.cxx > CMakeFiles/dynearthsol2d.dir/remeshing.cxx.i
 
 CMakeFiles/dynearthsol2d.dir/remeshing.cxx.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/dynearthsol2d.dir/remeshing.cxx.s"
-	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/remeshing.cxx -o CMakeFiles/dynearthsol2d.dir/remeshing.cxx.s
+	/Library/Developer/CommandLineTools/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/sabberahamed/Documents/dynearthsol3d_energy/remeshing.cxx -o CMakeFiles/dynearthsol2d.dir/remeshing.cxx.s
 
 # Object files for target dynearthsol2d
 dynearthsol2d_OBJECTS = \
