@@ -84,6 +84,11 @@ struct Control {
 
     bool has_hydration_processes;
     double hydration_migration_speed;
+    
+    // GPU acceleration options
+    bool use_gpu;                   // Whether to use GPU acceleration if available
+    std::string gpu_device_type;    // "ALL", "GPU", or "CPU"
+    int gpu_local_work_size;        // Work group size for GPU computation 
 };
 
 struct BC {
@@ -281,6 +286,31 @@ struct Variables {
 
     int_vec2D *elemmarkers; // for marksersets[0] (mattype markers)
     Array2D<int,1> *hydrous_elemmarkers; // for markersets[hydrous_marker_index] (hydrous markers)
+
+    Variables() : time(0), dt(0), steps(0),
+                  nnode(0), nelem(0), nseg(0),
+                  max_vbc_val(0), compensation_pressure(0),
+                  coord(nullptr), connectivity(nullptr), segment(nullptr), segflag(nullptr), regattr(nullptr),
+                  bcflag(nullptr),
+                  support(nullptr),
+                  volume(nullptr), volume_old(nullptr), volume_n(nullptr),
+                  mass(nullptr), tmass(nullptr),
+                  edvoldt(nullptr), ediffStress(nullptr), ndiffStress(nullptr),
+                  temperature(nullptr), plstrain(nullptr), delta_plstrain(nullptr),
+                  temp_power(nullptr), temp_pressure(nullptr), temp_density(nullptr),
+                  stressyy(nullptr), z0(nullptr), thermal_stress(nullptr),
+                  ntmp(nullptr),
+                  dtemp(nullptr), dP(nullptr), rho(nullptr), drho(nullptr),
+                  power(nullptr), tenergy(nullptr), venergy(nullptr), denergy(nullptr),
+                  powerTerm(nullptr), pressureTerm(nullptr), densityTerm(nullptr),
+                  thermal_energy(nullptr), elastic_energy(nullptr), elastic_strain(nullptr),
+                  vel(nullptr), force(nullptr), coord0(nullptr),
+                  strain_rate(nullptr), strain(nullptr), stress(nullptr),
+                  shpdx(nullptr), shpdy(nullptr), shpdz(nullptr),
+                  mat(nullptr),
+                  hydrous_marker_index(-1),
+                  elemmarkers(nullptr), hydrous_elemmarkers(nullptr)
+    {}
 };
 
 #endif

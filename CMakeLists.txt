@@ -17,6 +17,7 @@ add_definitions(-DPROJECT_ROOT_DIR="${PROJECT_ROOT_DIR}")
 
 # Add compile options
 option(WITH_OPENMP "Build with OpenMP support" ON)
+option(WITH_OPENCL "Build with OpenCL support for GPU acceleration" OFF)
 option(WITH_3D "Build 3D version" OFF)
 option(WITH_ADAPT "Build with libadaptivity for mesh optimization" OFF)
 option(WITH_DEBUG "Build with debug symbols" OFF)
@@ -47,6 +48,18 @@ if(WITH_OPENMP)
         link_libraries(${OpenMP_CXX_LIBRARIES})
     else()
         message(WARNING "OpenMP requested but not found")
+    endif()
+endif()
+
+# Set up OpenCL if requested
+if(WITH_OPENCL)
+    find_package(OpenCL)
+    if(OpenCL_FOUND)
+        include_directories(${OpenCL_INCLUDE_DIRS})
+        add_definitions(-DWITH_OPENCL)
+        message(STATUS "Found OpenCL: ${OpenCL_LIBRARIES}")
+    else()
+        message(WARNING "OpenCL requested but not found")
     endif()
 endif()
 
@@ -81,6 +94,11 @@ set(SOURCES
     markerset.cxx
     vtk_output.cxx
 )
+
+# Add OpenCL sources if enabled
+if(WITH_OPENCL)
+    list(APPEND SOURCES rheology-opencl.cpp)
+endif()
 
 # Add remeshing file based on adaptivity option
 if(WITH_ADAPT)
@@ -139,6 +157,15 @@ target_link_libraries(dynearthsol${DIM_SUFFIX}
     ${Boost_LIBRARIES}
 )
 
+# Add OpenCL if enabled
+if(WITH_OPENCL)
+    target_link_libraries(dynearthsol${DIM_SUFFIX} ${OpenCL_LIBRARIES})
+    
+    # Copy the OpenCL kernel file to the build directory
+    configure_file(${CMAKE_CURRENT_SOURCE_DIR}/stress_update_kernel.cl 
+                   ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/stress_update_kernel.cl COPYONLY)
+endif()
+
 # Add libadaptivity if enabled
 if(WITH_ADAPT)
     add_subdirectory(libadaptivity)
@@ -147,6 +174,9 @@ endif()
 
 # Installation
 install(TARGETS dynearthsol${DIM_SUFFIX} DESTINATION bin)
+if(WITH_OPENCL)
+    install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/stress_update_kernel.cl DESTINATION bin)
+endif()
 
 # Add Python utilities directory if it exists
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/utils/CMakeLists.txt")
@@ -168,4 +198,5 @@ else()
     message(STATUS "  Dimensions: 2D")
 endif()
 message(STATUS "  OpenMP: ${WITH_OPENMP}")
+message(STATUS "  OpenCL: ${WITH_OPENCL}")
 message(STATUS "  Adaptivity: ${WITH_ADAPT}")

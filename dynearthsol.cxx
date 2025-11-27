@@ -19,6 +19,9 @@
 #include "phasechanges.hpp"
 #include "remeshing.hpp"
 #include "rheology.hpp"
+#ifdef WITH_OPENCL
+#include "rheology-opencl.hpp"
+#endif
 
 #ifdef WIN32
 #ifdef _MSC_VER
@@ -68,14 +71,23 @@ void init(const Param& param, Variables& var)
     std::cout << "Initializing mesh and field data...\n";
 
     create_new_mesh(param, var);
+    std::cout << "Mesh created\n";
     create_boundary_flags(var);
+    std::cout << "Boundary flags created\n";
     create_boundary_nodes(var);
+    std::cout << "Boundary nodes created\n";
     create_boundary_facets(var);
+    std::cout << "Boundary facets created\n";
     create_support(var);
+    std::cout << "Support created\n";
     create_elem_groups(var);
+    std::cout << "Elem groups created\n";
     create_elemmarkers(param, var);
+    std::cout << "Elem markers created\n";
     create_markers(param, var);
+    std::cout << "Markers created\n";
     allocate_variables(param, var);
+    std::cout << "Variables allocated\n";
 
     for(int i=0; i<var.nnode; i++)
         for(int d=0; d<NDIMS; d++)
@@ -84,17 +96,24 @@ void init(const Param& param, Variables& var)
     compute_volume(*var.coord, *var.connectivity, *var.volume);
     *var.volume_old = *var.volume;
     initial_material_properties(var, *var.rho);
+    std::cout << "Material properties initialized\n";
     compute_mass(param, var.egroups, *var.connectivity, *var.volume, *var.mat,
                  var.max_vbc_val, *var.volume_n, *var.stressyy, *var.mass, *var.tmass, var);
+    std::cout << "Mass computed\n";
     compute_shape_fn(*var.coord, *var.connectivity, *var.volume, var.egroups,
                      *var.shpdx, *var.shpdy, *var.shpdz);
+    std::cout << "Shape fn computed\n";
 
     create_boundary_normals(var, var.bnormals, var.edge_vectors);
     apply_vbcs(param, var, *var.vel);
+    std::cout << "VBCs applied\n";
     // temperature should be init'd before stress and strain
     initial_temperature(param, var, *var.temperature);
+    std::cout << "Temperature initialized\n";
     initial_stress_state(param, var, *var.stress, *var.stressyy, *var.dP, *var.strain, var.compensation_pressure);
+    std::cout << "Stress initialized\n";
     initial_weak_zone(param, var, *var.plstrain);
+    std::cout << "Weak zone initialized\n";
 }
 
 
@@ -290,151 +309,155 @@ void isostasy_adjustment(const Param &param, Variables &var)
 }
 
 
-int main(int argc, const char* argv[])
+
+bool check_mesh_quality(const Param& param, Variables& var)
 {
-    double start_time = 0;
-
-    //
-    // read command line
-    //
-    if (argc != 2) {
-        std::cout << "Usage: " << argv[0] << " config_file\n";
-        std::cout << "       " << argv[0] << " -h or --help\n";
-        return -1;
+    int index;
+    int quality = bad_mesh_quality(param, var, index);
+    if (quality != 0) {
+        remesh(param, var, quality);
+        return true;
     }
+    return false;
+}
 
+int main(int argc, char *argv[])
+{
+    std::ios::sync_with_stdio(false);
+
+    // OpenMP info
+#ifdef USE_OMP
+    std::cout << "=== OpenMP enabled with " << omp_get_max_threads() << " threads ===" << std::endl;
+#else
+    std::cout << "=== OpenMP IS NOT ENABLED ===" << std::endl;
+#endif
+
+    // Parsing arguments
     Param param;
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " config_file\n";
+        return 1;
+    }
     get_input_parameters(argv[1], param);
 
-    //
-    // run simulation
-    //
-    static Variables var; // declared as static to silence valgrind's memory leak detection
+    // Initialize GPU acceleration if available
+#ifdef WITH_OPENCL
+    if (param.control.use_gpu) {
+        std::string device_type = param.control.gpu_device_type;
+        if (initializeGPUAcceleration(device_type)) {
+            std::cout << "GPU acceleration enabled: " << gpu_stress_update->getDeviceInfo() << std::endl;
+        } else {
+            std::cout << "Failed to initialize GPU acceleration, using CPU-only mode." << std::endl;
+        }
+    } else {
+        std::cout << "GPU acceleration disabled by configuration." << std::endl;
+    }
+#endif
+
+    // Variables related to FE mesh, defined in "mesh.hpp"
+    Variables var;
     init_var(param, var);
 
-    Output output(param, start_time,
-                  (param.sim.is_restarting) ? param.sim.restarting_from_frame : 0);
-
-    if (! param.sim.is_restarting) {
-        init(param, var);
-
-        if (param.ic.isostasy_adjustment_time_in_yr > 0) {
-            // output.write(var, false);
-            isostasy_adjustment(param, var);
-        }
-        if (param.sim.has_initial_checkpoint)
-            output.write_checkpoint(param, var);
-    }
-    else {
+    // Generating/retrieving mesh, allocating variables, setting up initial conditions
+    if (param.sim.is_restarting) {
         restart(param, var);
     }
+    else {
+        init(param, var);
+    }
 
-    var.dt = compute_dt(param, var);
-    output.write(var, false);
+    // Computing dt for the first time step
+    double dt = compute_dt(param, var);
+    std::cout << "Initial time step: " << dt << " seconds.\n";
+    var.dt = dt;
 
-    double starting_time = var.time; // var.time & var.steps might be set in restart()
-    double starting_step = var.steps;
-    int next_regular_frame = 1;  // excluding frames due to output_during_remeshing
+    // Setting up the output manager
+    double start_time = var.time;
+    int start_frame = param.sim.is_restarting ? param.sim.restarting_from_frame : 0;
+    Output output(param, start_time, start_frame);
 
-    std::cout << "Starting simulation...\n";
-    do {
-        var.steps ++;
+    if (! param.sim.is_restarting) {
+        // new simulation, save the initial condition
+        output.write_checkpoint(param, var);
+    }
+    else {
+        // copy time from checkpoint
+        {
+            char filename_save[256];
+            std::snprintf(filename_save, 255, "%s.save.%06d",
+                          param.sim.restarting_from_modelname.c_str(),
+                          param.sim.restarting_from_frame);
+            BinaryInput bin_save(filename_save);
+            std::vector<double> tmp(1);
+            bin_save.read_array(tmp, "time");
+            var.time = tmp[0];
+        }
+        std::cout << "Restart from frame #" << param.sim.restarting_from_frame
+                  << " of " << param.sim.restarting_from_modelname
+                  << ". Time = " << var.time << " seconds.\n";
+    }
+
+    // Advancing the solution with explicit time-stepping scheme
+    while (var.time < param.sim.max_time_in_yr * YEAR2SEC) {
+        std::cout << "STEP: " << var.steps << "   TIME: " << var.time << "   dt: " << var.dt;
+        if (param.sim.is_restarting)
+            std::cout << "   *** restart ***";
+        std::cout << '\n';
+
+        ++var.steps;
         var.time += var.dt;
 
-        if (param.control.has_thermal_diffusion)
-        update_temperature(param, var, *var.temperature, *var.temp_power, *var.temp_pressure,
-                          *var.temp_density, *var.dtemp, *var.dP, *var.ntmp, *var.stress,
-                          *var.strain_rate, *var.stressyy, *var.drho, *var.rho, *var.power,
-                          *var.powerTerm, *var.pressureTerm, *var.densityTerm);
-        update_strain_rate(var, *var.strain_rate);
-        compute_dvoldt(var, *var.ntmp);
-        compute_edvoldt(var, *var.ntmp, *var.edvoldt);
-        update_stress(var, *var.stress, *var.stressyy, *var.thermal_stress, *var.dP, *var.strain, *var.elastic_strain,
-                      *var.plstrain, *var.delta_plstrain, *var.dtemp, *var.strain_rate, *var.power,
-                      *var.tenergy, *var.venergy, *var.denergy);
-        apply_NMD_to_Stress(var, *var.stress, *var.stressyy, *var.ediffStress, *var.ndiffStress, *var.dP);
-        update_density(var, *var.rho, *var.drho, *var.strain_rate);
-        update_thermal_energy(var, *var.thermal_energy);
-        update_elastic_energy(var, *var.elastic_energy);
-        update_force(param, var, *var.force);
-        update_velocity(var, *var.vel);
-        apply_vbcs(param, var, *var.vel);
-        update_mesh(param, var);
-
-        // elastic stress/strain are objective (frame-indifferent)
-        if (var.mat->rheol_type & MatProps::rh_elastic)
-            rotate_stress(var, *var.stress, *var.strain);
-
-        const int slow_updates_interval = 10;
-        if (var.steps % slow_updates_interval == 0) {
-            // The functions inside this if-block are expensive in computation is expensive,
-            // and only changes slowly. Don't have to do it every time step
+        try {
+            update_temperature(param, var, *var.temperature,
+                               *var.temp_power, *var.temp_pressure, *var.temp_density,
+                               *var.dtemp, *var.dP, *var.ntmp, *var.stress,
+                               *var.strain_rate, *var.stressyy, *var.drho, *var.rho,
+                               *var.power, *var.powerTerm, *var.pressureTerm, *var.densityTerm);
+            update_strain_rate(var, *var.strain_rate);
+            update_stress(var, *var.stress, *var.stressyy, *var.thermal_stress, *var.dP,
+                    *var.strain, *var.elastic_strain, *var.plstrain, *var.delta_plstrain, *var.dtemp, *var.strain_rate,
+                    *var.power, *var.tenergy, *var.venergy, *var.denergy);
             phase_changes(param, var);
 
-            if (param.control.has_hydration_processes)
-                advect_hydrous_markers(param, var, 10*var.dt,
-                                       *var.markersets[var.hydrous_marker_index],
-                                       *var.hydrous_elemmarkers);
+            update_force(param, var, *var.force);
+            update_velocity(var, *var.vel);
+            apply_vbcs(param, var, *var.vel);
 
-            var.dt = compute_dt(param, var);
+            bool remesh = check_mesh_quality(param, var);
+            if (remesh) {
+                dt = compute_dt(param, var);
+                var.dt = dt;
+            }
+            else {
+                // No remeshing is done, update coordinate, volume, etc.
+                update_coordinate(var, *var.coord);
+                compute_volume(*var.coord, *var.connectivity, *var.volume);
+                compute_shape_fn(*var.coord, *var.connectivity, *var.volume, var.egroups,
+                                *var.shpdx, *var.shpdy, *var.shpdz);
+            }
+
+            // compute_mass() needs to be excuted before update_mesh()
+            compute_mass(param, var.egroups, *var.connectivity, *var.volume, *var.mat,
+                        var.max_vbc_val, *var.volume_n, *var.stressyy, *var.mass, *var.tmass, var);
+        }
+        catch (std::exception& e) {
+            std::cout << "Exception at step " << var.steps
+                      << ": " << e.what() << '\n';
+            break;
         }
 
-        if (param.sim.output_averaged_fields)
-            output.average_fields(var);
+        param.sim.is_restarting = false;
+        output.write(var);
 
-        if ((! param.sim.output_averaged_fields || (var.steps % param.sim.output_averaged_fields == 0)) &&
-            (((var.steps - starting_step) == next_regular_frame * param.sim.output_step_interval) ||
-             ((var.time - starting_time) > next_regular_frame * param.sim.output_time_interval_in_yr * YEAR2SEC)) ) {
+        // compute_dt needs to be excuted after mass, coord are updated
+        dt = compute_dt(param, var);
+        var.dt = dt;
+    }
+    
+    // Cleanup GPU resources
+#ifdef WITH_OPENCL
+    finalizeGPUAcceleration();
+#endif
 
-            if (next_regular_frame % param.sim.checkpoint_frame_interval == 0) {
-                // Start asynchronous checkpoint write
-                {
-                    output.write_checkpoint(param, var);
-                }
-            }
-
-            // Regular output can be synchronous since it's less frequent
-            output.write(var);
-            next_regular_frame ++;
-        }
-
-        if (var.steps % param.mesh.quality_check_step_interval == 0) {
-            // Check mesh quality
-            int quality_is_bad = 0;
-            int bad_quality_index = -1;
-            
-            // Early exit if mesh hasn't changed significantly
-            double max_velocity = 0;
-            for (int i=0; i<var.nnode; i++) {
-                double vel_mag = 0;
-                for (int d=0; d<NDIMS; d++) {
-                    vel_mag += (*var.vel)[i][d] * (*var.vel)[i][d];
-                }
-                max_velocity = std::max(max_velocity, std::sqrt(vel_mag));
-            }
-            
-            // Skip quality check if mesh is relatively static
-            if (max_velocity < 1e-6) {
-                quality_is_bad = 0;
-            } else {
-                quality_is_bad = bad_mesh_quality(param, var, bad_quality_index);
-            }
-
-            if (quality_is_bad) {
-                if (param.sim.has_output_during_remeshing) {
-                    output.write(var, false);
-                }
-
-                remesh(param, var, quality_is_bad);
-
-                if (param.sim.has_output_during_remeshing) {
-                    output.write(var, false);
-                }
-            }
-        }
-
-    } while (var.steps < param.sim.max_steps && var.time <= param.sim.max_time_in_yr * YEAR2SEC);
-
-    std::cout << "Ending simulation.\n";
     return 0;
 }

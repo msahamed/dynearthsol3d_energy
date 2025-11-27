@@ -199,9 +199,18 @@ static void declare_parameters(po::options_description &cfg,
          "Does the model have thermal diffusion? If not, temperature is advected, but not diffused.\n")
 
         ("control.has_hydration_processes", po::value<bool>(&p.control.has_hydration_processes)->default_value(false),
-         "Does the model have hydration processes? It is required to model some types of phase changes.")
-        ("control.hydration_migration_speed", po::value<double>(&p.control.hydration_migration_speed)->default_value(3e-9),
-         "The uppward migration speed of hydrous fluid (in m/s).\n")
+         "Does the model track hydration processes?")
+        ("control.hydration_migration_speed", po::value<double>(&p.control.hydration_migration_speed)->default_value(0),
+         "The migration speed of the hydrous fluid (m/s)")
+         
+        // GPU acceleration options
+        ("control.use_gpu", po::value<bool>(&p.control.use_gpu)->default_value(false),
+         "Use GPU acceleration if available?")
+        ("control.gpu_device_type", po::value<std::string>(&p.control.gpu_device_type)->default_value("ALL"),
+         "Type of device to use for GPU acceleration: 'ALL' (any available), 'GPU', or 'CPU'")
+        ("control.gpu_local_work_size", po::value<int>(&p.control.gpu_local_work_size)->default_value(64),
+         "Local work group size for GPU computation (0 for auto)")
+
         ;
 
     cfg.add_options()

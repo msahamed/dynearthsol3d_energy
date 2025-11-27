@@ -1,0 +1,11 @@
+
+bool check_mesh_quality(const Param& param, Variables& var)
+{
+    int index;
+    int quality = bad_mesh_quality(param, var, index);
+    if (quality != 0) {
+        remesh(param, var, quality);
+        return true;
+    }
+    return false;
+}
