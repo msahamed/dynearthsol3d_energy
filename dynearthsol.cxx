@@ -6,6 +6,7 @@
 
 #include "constants.hpp"
 #include "parameters.hpp"
+#include "benchmark.hpp"
 #include "bc.hpp"
 #include "binaryio.hpp"
 #include "fields.hpp"
@@ -68,6 +69,7 @@ void init_var(const Param& param, Variables& var)
 
 void init(const Param& param, Variables& var)
 {
+    BENCHMARK_START("Initialization");
     std::cout << "Initializing mesh and field data...\n";
 
     create_new_mesh(param, var);
@@ -114,6 +116,7 @@ void init(const Param& param, Variables& var)
     std::cout << "Stress initialized\n";
     initial_weak_zone(param, var, *var.plstrain);
     std::cout << "Weak zone initialized\n";
+    BENCHMARK_END();
 }
 
 
@@ -325,9 +328,25 @@ int main(int argc, char *argv[])
 {
     std::ios::sync_with_stdio(false);
 
+    // Start total timing
+    BENCHMARK_START("Total Runtime");
+
     // OpenMP info
 #ifdef USE_OMP
-    std::cout << "=== OpenMP enabled with " << omp_get_max_threads() << " threads ===" << std::endl;
+    int num_threads = omp_get_max_threads();
+    std::cout << "=== OpenMP ENABLED: " << num_threads << " threads ===" << std::endl;
+    
+    // Set number of threads explicitly
+    omp_set_num_threads(num_threads);
+    
+    // Verify in parallel region
+    #pragma omp parallel
+    {
+        #pragma omp master
+        {
+            std::cout << "Parallel region active with " << omp_get_num_threads() << " threads" << std::endl;
+        }
+    }
 #else
     std::cout << "=== OpenMP IS NOT ENABLED ===" << std::endl;
 #endif
@@ -339,6 +358,10 @@ int main(int argc, char *argv[])
         return 1;
     }
     get_input_parameters(argv[1], param);
+    
+    std::cout << "DEBUG: Loaded max_steps = " << param.sim.max_steps << std::endl;
+    std::cout << "DEBUG: Loaded output_step_interval = " << param.sim.output_step_interval << std::endl;
+    std::cout << "DEBUG: Loaded output_time_interval_in_yr = " << param.sim.output_time_interval_in_yr << std::endl;
 
     // Initialize GPU acceleration if available
 #ifdef WITH_OPENCL
@@ -398,7 +421,10 @@ int main(int argc, char *argv[])
     }
 
     // Advancing the solution with explicit time-stepping scheme
+    double next_output_time = var.time + param.sim.output_time_interval_in_yr * YEAR2SEC;
     while (var.time < param.sim.max_time_in_yr * YEAR2SEC) {
+        BENCHMARK_START("Time Step");
+        
         std::cout << "STEP: " << var.steps << "   TIME: " << var.time << "   dt: " << var.dt;
         if (param.sim.is_restarting)
             std::cout << "   *** restart ***";
@@ -408,6 +434,7 @@ int main(int argc, char *argv[])
         var.time += var.dt;
 
         try {
+            BENCHMARK_START("Physics Update");
             update_temperature(param, var, *var.temperature,
                                *var.temp_power, *var.temp_pressure, *var.temp_density,
                                *var.dtemp, *var.dP, *var.ntmp, *var.stress,
@@ -418,10 +445,13 @@ int main(int argc, char *argv[])
                     *var.strain, *var.elastic_strain, *var.plstrain, *var.delta_plstrain, *var.dtemp, *var.strain_rate,
                     *var.power, *var.tenergy, *var.venergy, *var.denergy);
             phase_changes(param, var);
+            BENCHMARK_END(); // End Physics Update
 
+            BENCHMARK_START("Force & Velocity");
             update_force(param, var, *var.force);
             update_velocity(var, *var.vel);
             apply_vbcs(param, var, *var.vel);
+            BENCHMARK_END(); // End Force & Velocity
 
             bool remesh = check_mesh_quality(param, var);
             if (remesh) {
@@ -447,12 +477,32 @@ int main(int argc, char *argv[])
         }
 
         param.sim.is_restarting = false;
-        output.write(var);
+        
+        if (var.steps >= param.sim.max_steps) break;
+
+        if (var.steps % param.sim.output_step_interval == 0 ||
+            var.time >= next_output_time) {
+            BENCHMARK_START("Output");
+            output.write(var);
+            BENCHMARK_END(); // End Output
+            next_output_time += param.sim.output_time_interval_in_yr * YEAR2SEC;
+        }
 
         // compute_dt needs to be excuted after mass, coord are updated
         dt = compute_dt(param, var);
         var.dt = dt;
+        
+        BENCHMARK_END(); // End Time Step
     }
+    
+    BENCHMARK_END(); // End Total Runtime
+    
+    // Print performance summary
+    std::cout << "\n";
+    
+    // Write CSV for analysis
+    std::string csv_filename = param.sim.modelname + "_timing.csv";
+    g_benchmark.write_csv(csv_filename);
     
     // Cleanup GPU resources
 #ifdef WITH_OPENCL

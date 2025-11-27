@@ -40,14 +40,36 @@ else()
 endif()
 
 # Set up OpenMP if requested
+# Set up OpenMP if requested
 if(WITH_OPENMP)
+    # Hint for macOS Homebrew OpenMP
+    if(APPLE)
+        if(EXISTS "/opt/homebrew/opt/libomp")
+            set(OpenMP_ROOT "/opt/homebrew/opt/libomp")
+        elseif(EXISTS "/usr/local/opt/libomp")
+            set(OpenMP_ROOT "/usr/local/opt/libomp")
+        endif()
+    endif()
+
     find_package(OpenMP)
     if(OpenMP_CXX_FOUND)
+        message(STATUS "OpenMP Found!")
+        
+        # Override flags for Apple Clang if needed
+        if(CMAKE_CXX_COMPILER_ID MATCHES "AppleClang")
+            message(STATUS "Overriding OpenMP flags for AppleClang")
+            set(OpenMP_CXX_FLAGS "-Xpreprocessor" "-fopenmp")
+            set(OpenMP_C_FLAGS "-Xpreprocessor" "-fopenmp")
+        endif()
+        
+        message(STATUS "  OpenMP_CXX_FLAGS: ${OpenMP_CXX_FLAGS}")
+        message(STATUS "  OpenMP_CXX_LIBRARIES: ${OpenMP_CXX_LIBRARIES}")
+        
         add_compile_options(${OpenMP_CXX_FLAGS})
         add_definitions(-DUSE_OMP)
-        link_libraries(${OpenMP_CXX_LIBRARIES})
+        # We will link in target_link_libraries later
     else()
-        message(WARNING "OpenMP requested but not found")
+        message(WARNING "OpenMP requested but not found. Please install libomp (e.g. brew install libomp)")
     endif()
 endif()
 
@@ -76,6 +98,7 @@ include_directories(
 # Source files (common)
 set(SOURCES
     barycentric-fn.cxx
+    benchmark.cxx
     brc-interpolation.cxx
     bc.cxx
     binaryio.cxx
@@ -156,6 +179,10 @@ target_link_libraries(dynearthsol${DIM_SUFFIX}
     ANN
     ${Boost_LIBRARIES}
 )
+
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(dynearthsol${DIM_SUFFIX} OpenMP::OpenMP_CXX)
+endif()
 
 # Add OpenCL if enabled
 if(WITH_OPENCL)

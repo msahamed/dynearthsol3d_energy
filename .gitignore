@@ -119,3 +119,8 @@ output/
 *.xmf
 *.xdmf
 CLAUDE.md
+
+benchmark_results/
+
+*.log
+*.csv

@@ -295,6 +295,9 @@ void Output::average_fields(Variables& var)
 
 void Output::write_checkpoint(const Param& param, const Variables& var)
 {
+    // Ensure output directories exist
+    vtk_output::setup_output_directories(modelname);
+
     // Get run-specific directory
     std::string run_dir = vtk_output::get_run_directory(modelname);
     
