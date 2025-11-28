@@ -33,6 +33,7 @@ struct Sim {
     double output_time_interval_in_yr;
     int max_steps;
     int output_step_interval;
+    int terminal_output_interval;
     int output_averaged_fields;
     int checkpoint_frame_interval;
     int restarting_from_frame;

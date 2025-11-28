@@ -89,6 +89,25 @@ endif()
 find_package(Boost REQUIRED COMPONENTS program_options)
 include_directories(${Boost_INCLUDE_DIRS})
 
+# Find Eigen3 for vectorized math
+find_package(Eigen3 3.3 QUIET)
+
+# Fallback for Homebrew on Apple Silicon
+if(NOT Eigen3_FOUND)
+    if(EXISTS "/opt/homebrew/include/eigen3")
+        set(EIGEN3_INCLUDE_DIR "/opt/homebrew/include/eigen3")
+        set(Eigen3_FOUND TRUE)
+    endif()
+endif()
+
+if(Eigen3_FOUND)
+    message(STATUS "Found Eigen3: ${EIGEN3_INCLUDE_DIR}")
+    add_definitions(-DUSE_EIGEN)
+    include_directories(${EIGEN3_INCLUDE_DIR})
+else()
+    message(STATUS "Eigen3 not found. Please install it (e.g. 'brew install eigen') for better performance.")
+endif()
+
 # Add include directories
 include_directories(
     ${CMAKE_CURRENT_SOURCE_DIR}

@@ -40,6 +40,8 @@ static void declare_parameters(po::options_description &cfg,
          "Max. time (in years)")
         ("sim.output_step_interval", po::value<int>(&p.sim.output_step_interval),
          "Output step interval")
+        ("sim.terminal_output_interval", po::value<int>(&p.sim.terminal_output_interval)->default_value(1000),
+         "Terminal progress output interval (in steps). Set to 0 to print every step.")
         ("sim.output_time_interval_in_yr", po::value<double>(&p.sim.output_time_interval_in_yr),
          "Output time interval (in years)")
 

@@ -425,10 +425,42 @@ int main(int argc, char *argv[])
     while (var.time < param.sim.max_time_in_yr * YEAR2SEC) {
         BENCHMARK_START("Time Step");
         
-        std::cout << "STEP: " << var.steps << "   TIME: " << var.time << "   dt: " << var.dt;
-        if (param.sim.is_restarting)
-            std::cout << "   *** restart ***";
-        std::cout << '\n';
+        // Print progress based on terminal_output_interval parameter
+        bool should_print = (param.sim.terminal_output_interval == 0) || 
+                           (var.steps % param.sim.terminal_output_interval == 0) || 
+                           (var.steps == 1);
+        
+        if (should_print) {
+            // Convert time to human-readable format
+            double time_yr = var.time / YEAR2SEC;
+            double dt_yr = var.dt / YEAR2SEC;
+            
+            std::cout << "STEP: " << var.steps << "   TIME: ";
+            
+            // Format time in appropriate units
+            if (time_yr < 1000) {
+                std::cout << time_yr << " yr";
+            } else if (time_yr < 1e6) {
+                std::cout << (time_yr / 1000) << " Kyr";
+            } else {
+                std::cout << (time_yr / 1e6) << " Myr";
+            }
+            
+            std::cout << "   dt: ";
+            
+            // Format dt in appropriate units
+            if (dt_yr < 1000) {
+                std::cout << dt_yr << " yr";
+            } else if (dt_yr < 1e6) {
+                std::cout << (dt_yr / 1000) << " Kyr";
+            } else {
+                std::cout << (dt_yr / 1e6) << " Myr";
+            }
+            
+            if (param.sim.is_restarting)
+                std::cout << "   *** restart ***";
+            std::cout << '\n';
+        }
 
         ++var.steps;
         var.time += var.dt;

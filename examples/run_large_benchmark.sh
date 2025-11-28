@@ -1,12 +1,12 @@
 #!/bin/bash
 echo "=========================================="
-echo "LARGE-SCALE OpenMP Benchmark"
-echo "5000 steps, 400m resolution"
+echo "HIGH-RES OpenMP Benchmark"
+echo "5000 steps, 200m resolution"
 echo "=========================================="
 echo ""
 
 CONFIG="examples/shear_large_benchmark.cfg"
-RESULTS_DIR="benchmark_results/large_scale_$(date +%Y%m%d_%H%M%S)"
+RESULTS_DIR="benchmark_results/high_res_$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$RESULTS_DIR"
 
 echo "Starting benchmarks... (this will take a few minutes)"

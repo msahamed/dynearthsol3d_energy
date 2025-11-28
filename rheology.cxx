@@ -10,6 +10,8 @@
 #include "utils.hpp"
 
 
+#include "math_defs.hpp"
+
 static void principal_stresses3(const double* s, double p[3], double v[3][3])
 {
     /* s is a flattened stress vector, with the components {XX, YY, ZZ, XY, XZ, YZ}.
@@ -17,6 +19,29 @@ static void principal_stresses3(const double* s, double p[3], double v[3][3])
      * The eigenvalues are ordered such that p[0] <= p[1] <= p[2].
      */
 
+#ifdef USE_EIGEN
+    // Construct 3x3 symmetric matrix from flattened stress
+    Tensor m;
+    m(0,0) = s[0]; m(0,1) = s[3]; m(0,2) = s[4];
+    m(1,0) = s[3]; m(1,1) = s[1]; m(1,2) = s[5];
+    m(2,0) = s[4]; m(2,1) = s[5]; m(2,2) = s[2];
+
+    // Use Eigen's optimized solver
+    // SelfAdjointEigenSolver is faster than generic solver for symmetric matrices
+    Eigen::SelfAdjointEigenSolver<Tensor> solver(m, Eigen::ComputeEigenvectors);
+    
+    Vector eval = solver.eigenvalues();
+    Tensor evec = solver.eigenvectors();
+
+    // Copy back results
+    // Eigen sorts eigenvalues in increasing order by default, matching our requirement
+    for (int i=0; i<3; ++i) {
+        p[i] = eval(i);
+        for (int j=0; j<3; ++j) {
+            v[j][i] = evec(j,i);
+        }
+    }
+#else
     // unflatten s to a 3x3 tensor, only the upper part is needed.
     double a[3][3];
     a[0][0] = s[0];
@@ -65,6 +90,7 @@ static void principal_stresses3(const double* s, double p[3], double v[3][3])
         for (int i=0; i<3; ++i)
             v[i][1] = b[i];
     }
+#endif
 }
 
 
